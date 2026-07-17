@@ -27,6 +27,14 @@ body {
   background-size: 44px 44px;
 }
 
+.music-dock { position: fixed; z-index: 20; right: 22px; bottom: 22px; display: inline-flex; align-items: center; gap: 10px; max-width: min(300px, calc(100vw - 44px)); padding: 10px 12px 10px 10px; border: 1px solid rgba(39,245,199,.38); border-radius: 999px; background: rgba(7,12,10,.88); color: var(--text); text-decoration: none; box-shadow: 0 12px 36px rgba(0,0,0,.35); backdrop-filter: blur(12px); transition: transform 220ms var(--ease), border-color 220ms ease, background 220ms ease; }
+.music-dock:hover { transform: translateY(-4px); border-color: var(--gold); background: rgba(15,24,19,.96); }
+.music-disc { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--gold); border-radius: 50%; color: var(--gold); animation: spin 6s linear infinite; }
+.music-dock small, .music-dock strong { display: block; line-height: 1.25; }
+.music-dock small { color: var(--green); font-size: 10px; }
+.music-dock strong { font-size: 12px; }
+.music-play { color: var(--green); font-size: 12px; }
+
 a { color: inherit; }
 
 .hero {
@@ -691,6 +699,7 @@ code { color: var(--gold); }
   .hero-console { right: 18px; bottom: 22px; width: min(290px, calc(100vw - 36px)); }
   .faq-search { grid-column: auto; }
   .feedback-actions { align-items: flex-start; white-space: normal; }
+  .music-dock { right: 12px; bottom: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
