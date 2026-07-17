@@ -175,6 +175,34 @@ function renderFaqs(results = faqs.slice(0, 3)) {
 }
 
 function bindEvents() {
+  const music = $('#backgroundMusic');
+  const musicToggle = $('#musicToggle');
+  let musicStarted = false;
+  const startMusic = () => {
+    if (!music || musicStarted) return;
+    musicStarted = true;
+    music.muted = false;
+    music.play().then(() => {
+      musicToggle?.setAttribute('aria-pressed', 'true');
+      if (musicToggle) musicToggle.querySelector('.music-play').textContent = 'Ⅱ';
+    }).catch(() => { musicStarted = false; });
+  };
+  if (music) music.play().catch(() => {});
+  document.addEventListener('pointerdown', startMusic, { once: true });
+  musicToggle?.addEventListener('click', () => {
+    if (!music) return;
+    if (music.paused) {
+      musicStarted = true;
+      music.muted = false;
+      music.play();
+      musicToggle.setAttribute('aria-pressed', 'true');
+      musicToggle.querySelector('.music-play').textContent = 'Ⅱ';
+    } else {
+      music.pause();
+      musicToggle.setAttribute('aria-pressed', 'false');
+      musicToggle.querySelector('.music-play').textContent = '▶';
+    }
+  });
   $('#steps').addEventListener('click', (event) => {
     const copyButton = event.target.closest('[data-copy]');
     if (copyButton) {
