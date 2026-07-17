@@ -16,6 +16,20 @@ const progress = new Set(
 
 const $ = (selector) => document.querySelector(selector);
 
+const lyricLines = [
+  '关于全文我有话要说，AI 是工具，AI 是工具，AI 是工具。',
+  '认知不会随着专业技能的提升而提升。',
+  '变现的路径有很多，希望大家不要为了变现而去变现，而是用它创造出真正的价值。',
+  '金钱只是对你的聪明和勤奋路上一点附庸的奖赏。',
+  '这套文档在外面可能是199、399，甚至799，在这里是免费的。',
+  'AI 不属于任何一个人，而是属于这个社会。',
+  '这个文档可能晦涩难懂，但至少能解决 Codex 80% 的问题。',
+  '一时间的失败、代码报错，问题不大，主播随时都在。',
+  '希望你们从中学到东西，并在未来用它创造更大的价值。',
+  '有建议、有需求，直接用批注写在旁边，不要删除，也不要干扰其他用户。',
+  '如果文档里的视频帮助到你，请给原博主点关注、收藏。',
+];
+
 function saveProgress() {
   localStorage.setItem(progressKey, JSON.stringify([...progress]));
   renderProgress();
@@ -175,6 +189,7 @@ function renderFaqs(results = faqs.slice(0, 3)) {
 }
 
 function bindEvents() {
+  bindLyrics();
   const music = $('#backgroundMusic');
   const musicToggle = $('#musicToggle');
   let musicStarted = false;
@@ -242,6 +257,33 @@ function bindEvents() {
       status.innerHTML = `没检测到本机助手。继续查 FAQ，或等真实资料导入后下载检查助手：<a href="${localHelper.downloadUrl}">下载入口</a>`;
     }
   });
+}
+
+function bindLyrics() {
+  const track = $('#lyricTrack');
+  const panel = $('.lyric-panel');
+  if (!track || !panel) return;
+  track.innerHTML = lyricLines.map((line, index) => `<p data-lyric-index="${index}">${line}</p>`).join('');
+  let active = 0;
+  let offset = 0;
+  let playing = true;
+  const render = () => {
+    track.style.setProperty('--lyric-shift', `${-active * 58 + offset}px`);
+    track.querySelectorAll('p').forEach((node, index) => node.classList.toggle('is-active', index === active));
+  };
+  const step = (delta) => { active = (active + delta + lyricLines.length) % lyricLines.length; render(); };
+  const timer = setInterval(() => { if (playing) step(1); }, 3600);
+  $('#lyricToggle')?.addEventListener('click', (event) => {
+    playing = !playing;
+    event.currentTarget.textContent = playing ? '暂停' : '播放';
+  });
+  $('#lyricPrev')?.addEventListener('click', () => step(-1));
+  $('#lyricNext')?.addEventListener('click', () => step(1));
+  $('#lyricPosition')?.addEventListener('input', (event) => { offset = Number(event.target.value); render(); });
+  panel.addEventListener('mouseenter', () => { playing = false; $('#lyricToggle').textContent = '播放'; });
+  panel.addEventListener('mouseleave', () => { playing = true; $('#lyricToggle').textContent = '暂停'; });
+  render();
+  window.addEventListener('beforeunload', () => clearInterval(timer), { once: true });
 }
 
 function drawHero() {
