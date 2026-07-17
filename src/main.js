@@ -149,7 +149,7 @@ function renderRelayLinks() {
 }
 
 function bindScrollReveal() {
-  const targets = document.querySelectorAll('.rescue, .helper');
+  const targets = document.querySelectorAll('.step, .rescue, .helper');
   if (!('IntersectionObserver' in window)) return;
   targets.forEach((target) => target.classList.add('reveal-target'));
   const observer = new IntersectionObserver((entries, instance) => {
