@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CODEX++ GPT 部署电脑连接助手</title>
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body>
+    <header class="hero">
+      <canvas id="heroCanvas" aria-hidden="true"></canvas>
+      <nav>
+        <strong>CODEX++</strong>
+        <a href="#steps">四步教程</a>
+        <a href="#rescue">视频 & 群聊</a>
+      </nav>
+      <section class="hero-copy">
+        <p class="eyebrow">CODEX 接入作战台 · 默认助手 codeX ++</p>
+        <h1>4 步，把你的电脑接入 Codex GPT 部署机。</h1>
+        <p>下载安装到配置 CODEX++，再连上运行 GPT Agent 的部署电脑。先看教学视频，卡住就查 FAQ 或进群提问。</p>
+        <div class="hero-actions">
+          <a class="primary link-button" href="#steps">开始第一步</a>
+          <a class="ghost link-button" href="#rescue">我已经卡住了</a>
+        </div>
+      </section>
+      <aside class="hero-console" aria-label="连接状态预览">
+        <div class="console-orbit"><span></span><i></i></div>
+        <div class="console-head"><span>LINK MONITOR</span><b>LIVE</b></div>
+        <div class="console-row"><span>CODEX CLIENT</span><strong>READY</strong></div>
+        <div class="console-row"><span>LOCAL ROUTE</span><strong>15721</strong></div>
+        <div class="console-row"><span>GPT AGENT</span><strong>WAITING</strong></div>
+        <div class="console-meter"><i></i></div>
+      </aside>
+    </header>
+
+    <main>
+      <section class="progress-panel">
+        <div>
+          <span id="progressText">0/4 已完成</span>
+          <div class="bar"><i id="progressBar"></i></div>
+        </div>
+        <p><span class="live-dot"></span>本地教程已加载 · 按步骤完成即可</p>
+      </section>
+
+      <section id="steps" class="steps" aria-label="四步教程"></section>
+
+      <section id="rescue" class="rescue">
+        <div class="section-title">
+          <p class="eyebrow">视频教学 · 交流群</p>
+          <h2>先看一遍，再带着问题来问。</h2>
+          <p>截图识别先下线，避免给你“看起来很智能、实际解决不了”的假帮助。先看视频，遇到具体问题再查 FAQ 或进群。</p>
+        </div>
+        <div class="rescue-grid">
+          <article class="training-video">
+            <div class="video-stage" aria-hidden="true">
+              <span class="video-kicker">VIDEO 01</span>
+              <span class="play-mark">▶</span>
+              <span class="video-duration">建议完整看完</span>
+            </div>
+            <div class="video-copy">
+              <span class="eyebrow">抖音教学视频</span>
+              <h3>小白先看：安装和基础接入</h3>
+              <p>先看完这条入门视频，再回到四步流程操作；看不懂的地方可以进群提问。</p>
+              <a class="primary link-button" href="https://v.douyin.com/FyDjdMS0p8c/" target="_blank" rel="noreferrer">打开教学视频 ↗</a>
+            </div>
+          </article>
+          <article class="training-video">
+            <div class="video-stage" aria-hidden="true">
+              <span class="video-kicker">VIDEO 02</span>
+              <span class="play-mark">▶</span>
+              <span class="video-duration">配置时对照看</span>
+            </div>
+            <div class="video-copy">
+              <span class="eyebrow">抖音教学视频</span>
+              <h3>进阶对照：中转、令牌和验证</h3>
+              <p>第二条视频用于对照配置链路，尤其适合卡在中转域名、令牌、模型验证这些环节。</p>
+              <a class="primary link-button" href="https://v.douyin.com/sPl8uhD826I/" target="_blank" rel="noreferrer">打开教学视频 ↗</a>
+            </div>
+          </article>
+          <aside class="community-card">
+            <div>
+              <span class="eyebrow">需要具体帮助</span>
+              <h3>Codex 部署交流群</h3>
+              <p>扫码加入 QQ 群，交流安装、配置、中转和实际使用问题。</p>
+              <p class="group-number">QQ群：942308330</p>
+            </div>
+            <img class="community-qr" src="assets/community-qr.jpg" alt="加入 Codex 部署交流群二维码">
+          </aside>
+          <div class="faq-search">
+            <label class="search-label" for="search">常见问题答疑</label>
+            <input id="search" type="search" placeholder="输入：下载失败、安装权限、连接失败、没有日志、模型不显示">
+            <div id="faqResults" class="faq-results"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="helper">
+        <div>
+          <p class="eyebrow">按需启用</p>
+          <h2>一键检查助手只查你的电脑。</h2>
+          <p>页面默认不会请求 localhost。只有点击按钮后，才检查 <code>127.0.0.1:7331</code>。</p>
+        </div>
+        <button id="helperBtn" class="primary">启用一键检查</button>
+        <p id="helperStatus" class="muted">未启用。</p>
+      </section>
+
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
