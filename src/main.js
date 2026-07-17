@@ -271,15 +271,15 @@ function bindLyrics() {
   let dragging = false;
   let dragX = 0;
   let dragY = 0;
-  const dragHandle = panel.querySelector('.lyric-head');
-  dragHandle?.addEventListener('pointerdown', (event) => {
-    if (event.target.closest('button')) return;
+  panel.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('button, input, a')) return;
+    event.preventDefault();
     dragging = true;
     dragX = event.clientX - panel.offsetLeft;
     dragY = event.clientY - panel.offsetTop;
-    panel.setPointerCapture?.(event.pointerId);
+    panel.classList.add('is-dragging');
   });
-  dragHandle?.addEventListener('pointermove', (event) => {
+  document.addEventListener('pointermove', (event) => {
     if (!dragging) return;
     const hero = document.querySelector('.hero');
     if (!hero) return;
@@ -288,7 +288,7 @@ function bindLyrics() {
     panel.style.top = `${Math.max(70, Math.min(rect.height - panel.offsetHeight - 12, event.clientY - rect.top - dragY))}px`;
     panel.style.right = 'auto';
   });
-  dragHandle?.addEventListener('pointerup', () => { dragging = false; });
+  document.addEventListener('pointerup', () => { dragging = false; panel.classList.remove('is-dragging'); });
   const render = () => {
     track.style.setProperty('--lyric-shift', `${-active * 58 + offset}px`);
     track.querySelectorAll('p').forEach((node, index) => node.classList.toggle('is-active', index === active));

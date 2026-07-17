@@ -37,16 +37,17 @@ body {
 .music-dock small { color: var(--green); font-size: 10px; }
 .music-dock strong { font-size: 12px; }
 .music-play { color: var(--green); font-size: 12px; }
-.lyric-panel { position: absolute; z-index: 3; top: 23%; right: clamp(18px, 5vw, 72px); width: min(330px, calc(100% - 44px)); min-width: 280px; min-height: 220px; resize: both; overflow: hidden; padding: 14px; border: 1px solid rgba(167,139,250,.48); border-radius: 14px; background: rgba(8,10,18,.9); box-shadow: 0 18px 60px rgba(0,0,0,.42), inset 0 0 28px rgba(167,139,250,.06); backdrop-filter: blur(14px); }
+.lyric-panel { position: absolute; z-index: 3; top: 23%; right: clamp(18px, 5vw, 72px); width: min(330px, calc(100% - 44px)); min-width: 280px; min-height: 220px; resize: vertical; overflow: hidden; padding: 14px; border: 1px solid rgba(139,163,255,.48); border-radius: 14px; background: rgba(8,10,18,.9); box-shadow: 0 18px 60px rgba(0,0,0,.42), inset 0 0 28px rgba(139,163,255,.06); backdrop-filter: blur(14px); }
 .lyric-head, .lyric-controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.lyric-head { color: var(--violet); font: 700 10px/1 "Cascadia Code", Consolas, monospace; letter-spacing: .12em; cursor: grab; user-select: none; }
+.lyric-head { color: var(--blue); font: 700 10px/1 "Cascadia Code", Consolas, monospace; letter-spacing: .12em; cursor: grab; user-select: none; }
+.lyric-panel.is-dragging { cursor: grabbing; user-select: none; opacity: .94; }
 .lyric-head button, .lyric-controls button { border: 1px solid rgba(39,245,199,.4); padding: 5px 8px; border-radius: 6px; background: rgba(39,245,199,.08); color: var(--green); font-size: 11px; }
 .lyric-viewport { height: 138px; margin: 12px 0; overflow: hidden; mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent); -webkit-mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent); }
 .lyric-track { transform: translateY(var(--lyric-shift, 0)); transition: transform 700ms var(--ease); padding: 40px 0; }
 .lyric-track p { min-height: 58px; display: grid; place-items: center; margin: 0; padding: 0 8px; color: rgba(244,240,232,.35); text-align: center; font-size: 13px; line-height: 1.55; transition: color 500ms ease, transform 500ms ease, text-shadow 500ms ease; }
 .lyric-track p.is-active { color: var(--text); transform: scale(1.04); text-shadow: 0 0 18px rgba(39,245,199,.35); }
 .lyric-controls { color: var(--muted); font-size: 11px; }
-.lyric-controls input { flex: 1; accent-color: var(--pink); }
+.lyric-controls input { flex: 1; accent-color: var(--blue); }
 
 a { color: inherit; }
 
