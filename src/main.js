@@ -193,6 +193,7 @@ function bindEvents() {
   const music = $('#backgroundMusic');
   const musicToggle = $('#musicToggle');
   let musicStarted = false;
+  if (music) music.volume = 0.6;
   const startMusic = () => {
     if (!music || musicStarted) return;
     musicStarted = true;
@@ -267,6 +268,27 @@ function bindLyrics() {
   let active = 0;
   let offset = 0;
   let playing = true;
+  let dragging = false;
+  let dragX = 0;
+  let dragY = 0;
+  const dragHandle = panel.querySelector('.lyric-head');
+  dragHandle?.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('button')) return;
+    dragging = true;
+    dragX = event.clientX - panel.offsetLeft;
+    dragY = event.clientY - panel.offsetTop;
+    panel.setPointerCapture?.(event.pointerId);
+  });
+  dragHandle?.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    panel.style.left = `${Math.max(12, Math.min(rect.width - panel.offsetWidth - 12, event.clientX - rect.left - dragX))}px`;
+    panel.style.top = `${Math.max(70, Math.min(rect.height - panel.offsetHeight - 12, event.clientY - rect.top - dragY))}px`;
+    panel.style.right = 'auto';
+  });
+  dragHandle?.addEventListener('pointerup', () => { dragging = false; });
   const render = () => {
     track.style.setProperty('--lyric-shift', `${-active * 58 + offset}px`);
     track.querySelectorAll('p').forEach((node, index) => node.classList.toggle('is-active', index === active));

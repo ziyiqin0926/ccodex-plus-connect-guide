@@ -31,6 +31,11 @@
         <div class="console-row"><span>GPT AGENT</span><strong>WAITING</strong></div>
         <div class="console-meter"><i></i></div>
       </aside>
+      <aside class="lyric-panel" aria-label="滚动演示文字">
+        <div class="lyric-head"><span>SCROLLING NOTE · 可拖动</span><button id="lyricToggle" type="button">暂停</button></div>
+        <div class="lyric-viewport"><div id="lyricTrack" class="lyric-track"></div></div>
+        <div class="lyric-controls"><label for="lyricPosition">句子位置</label><input id="lyricPosition" type="range" min="-120" max="120" value="0" step="4"><button id="lyricPrev" type="button" aria-label="上一句">↑</button><button id="lyricNext" type="button" aria-label="下一句">↓</button></div>
+      </aside>
     </header>
 
     <main>
@@ -125,12 +130,6 @@
       <span><small>背景音乐</small><strong>Mixkit · Deep Urban</strong></span>
       <span class="music-play" aria-hidden="true">▶</span>
     </button>
-    <aside class="lyric-panel" aria-label="滚动演示文字">
-      <div class="lyric-head"><span>SCROLLING NOTE</span><button id="lyricToggle" type="button">暂停</button></div>
-      <div class="lyric-viewport"><div id="lyricTrack" class="lyric-track"></div></div>
-      <div class="lyric-controls"><label for="lyricPosition">句子位置</label><input id="lyricPosition" type="range" min="-120" max="120" value="0" step="4"><button id="lyricPrev" type="button" aria-label="上一句">↑</button><button id="lyricNext" type="button" aria-label="下一句">↓</button></div>
-    </aside>
-
     <script type="module" src="src/main.js"></script>
   </body>
 </html>
