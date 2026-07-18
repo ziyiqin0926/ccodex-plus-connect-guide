@@ -864,6 +864,12 @@ h1, h2, h3 { color: var(--text); }
 .lyric-track p.is-active { color: rgba(238,242,255,.95); text-shadow: 0 0 22px rgba(129,140,248,.35); }
 .lyric-controls { color: rgba(203,213,225,.7); }
 .lyric-controls input { opacity: .72; }
+.lyric-panel { border: 0 !important; outline: 0; background: transparent !important; box-shadow: none !important; }
+.lyric-head { justify-content: flex-end; }
+.lyric-head > span { display: none; }
+.lyric-head button { border: 0; background: transparent; opacity: .7; }
+.lyric-controls { display: none; }
+.lyric-viewport { margin-top: 4px; }
 @media (max-width: 760px) {
   .lyric-panel { top: 42%; right: 18px; width: calc(100% - 36px); min-width: 0; }
   .lyric-viewport { height: 170px; }
