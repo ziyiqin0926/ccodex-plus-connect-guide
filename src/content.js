@@ -30,7 +30,7 @@
   {
     id: 'connect',
     title: '检查供应商是否配对成功',
-    action: '在 CODEX++ 的「供应商配置」里确认 Base URL、Key、上游协议和 Codex 目标功能；保存后点击「诊断供应商」。',
+    action: '不会配对就按这一步一步来：打开供应商配置 → 选择纯 API → 填 Base URL 和 Key → 选择上游协议 → 开启目标功能 → 保存并点击诊断供应商。',
     helpKey: '连接',
     downloadUrl: '#pending-feishu-export',
     image: 'assets/step-connect.webp',

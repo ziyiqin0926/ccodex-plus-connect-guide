@@ -846,6 +846,9 @@ h1, h2, h3 { color: var(--text); }
 .step:hover, .optimization-card:hover, .download-card:hover, .faq:hover { border-color: rgba(129,140,248,.55); box-shadow: 0 14px 30px rgba(2,6,23,.34); }
 .primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #f8fafc; box-shadow: 0 6px 18px rgba(99,102,241,.28); }
 .primary:hover { background: linear-gradient(135deg, #818cf8, #a78bfa); }
+.relay-card.reference-panel .download-actions .link-button { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-color: transparent; color: #f8fafc; }
+.hero-console { display: none; }
+.step-actions .ghost { display: none; }
 .ghost { border-color: #475569; background: #1f2937; color: var(--text); }
 .lyric-panel { border-color: rgba(129,140,248,.42); background: rgba(17,24,39,.94); box-shadow: 0 14px 36px rgba(2,6,23,.46); }
 .lyric-track p { color: rgba(229,231,235,.34); }
