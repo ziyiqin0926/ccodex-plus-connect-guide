@@ -343,15 +343,14 @@ function drawBallPit() {
     phase: index * .73,
     };
   });
-  hero.addEventListener('pointermove', (event) => {
+  window.addEventListener('pointermove', (event) => {
     const box = canvas.getBoundingClientRect();
     pointer.x = event.clientX - box.left;
     pointer.y = event.clientY - box.top;
-    pointer.active = true;
+    pointer.active = pointer.x >= 0 && pointer.x <= box.width && pointer.y >= 0 && pointer.y <= box.height;
   }, { passive: true });
-  hero.addEventListener('pointerleave', () => { pointer.active = false; }, { passive: true });
-  hero.addEventListener('pointerdown', () => {
-    if (reducedMotion) return;
+  window.addEventListener('pointerdown', () => {
+    if (!pointer.active) return;
     balls.forEach((ball) => { ball.vy -= .8; ball.vx += (ball.x < pointer.x ? -.35 : .35); });
   }, { passive: true });
   hero.addEventListener('wheel', (event) => {
@@ -370,13 +369,13 @@ function drawBallPit() {
       ball.vy += Math.cos(tick * .014 + ball.phase) * .008;
       ball.vx *= .999;
       ball.vy *= .999;
-      if (pointer.active && !reducedMotion) {
+      if (pointer.active) {
         const dx = ball.x - pointer.x;
         const dy = ball.y - pointer.y;
         const distance = Math.hypot(dx, dy) || 1;
-        const reach = 92 + ball.r;
+        const reach = 180 + ball.r;
         if (distance < reach) {
-          const force = (1 - distance / reach) * 1.15;
+          const force = (1 - distance / reach) * 2.4;
           ball.vx += (dx / distance) * force;
           ball.vy += (dy / distance) * force;
         }
@@ -438,6 +437,14 @@ function drawBallPit() {
       ctx.lineWidth = Math.max(1, ball.r * .035);
       ctx.stroke();
     });
+    if (pointer.active) {
+      ctx.globalAlpha = .42;
+      ctx.strokeStyle = '#a5b4fc';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(pointer.x, pointer.y, 24 + Math.sin(tick * .12) * 5, 0, Math.PI * 2);
+      ctx.stroke();
+    }
     ctx.globalAlpha = 1;
     tick += 1;
     requestAnimationFrame(frame);
