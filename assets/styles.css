@@ -744,3 +744,62 @@ code { color: var(--gold); }
     transition-duration: 1ms !important;
   }
 }
+
+/* redesign: editorial terminal workbench */
+:root {
+  --bg: #101514;
+  --panel: #17201d;
+  --panel-2: #1b2622;
+  --line: rgba(214, 220, 205, .14);
+  --text: #e7e2d7;
+  --muted: #a5aaa0;
+  --green: #b7d995;
+  --gold: #e1ae68;
+  --blue: #9bb3aa;
+  --violet: #b7a9d3;
+  --pink: #d49eac;
+  --ease: cubic-bezier(.2,.8,.2,1);
+}
+
+body { background: var(--bg); color: var(--text); background-image: linear-gradient(rgba(231,226,215,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(231,226,215,.025) 1px, transparent 1px); background-size: 32px 32px; }
+nav { border-bottom: 1px solid var(--line); background: rgba(16,21,20,.78); backdrop-filter: blur(14px); }
+nav strong, .eyebrow, .search-label { color: var(--green); }
+nav strong::before, .eyebrow::before { color: var(--gold); }
+.hero { min-height: 82vh; border-bottom: 1px solid var(--line); background: linear-gradient(115deg, #101514 0%, #18231f 58%, #252019 100%); }
+.hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(16,21,20,.18), transparent 55%, rgba(225,174,104,.08)); }
+#heroCanvas { opacity: .18; mix-blend-mode: screen; }
+.hero-copy { width: min(720px, calc(100% - 36px)); padding-top: clamp(70px, 13vh, 150px); }
+h1 { max-width: 760px; color: var(--text); font-size: clamp(44px, 7vw, 88px); letter-spacing: -.045em; line-height: .94; text-wrap: balance; text-shadow: none; }
+.hero-copy > p:not(.eyebrow) { max-width: 58ch; color: var(--muted); font-size: 17px; }
+.hero-console { right: clamp(18px, 6vw, 92px); bottom: 12%; width: min(292px, calc(100% - 36px)); border: 1px solid rgba(231,226,215,.18); border-radius: 4px; background: rgba(23,32,29,.92); box-shadow: 0 24px 60px rgba(0,0,0,.28); }
+.console-head b { color: var(--gold); }
+.steps { gap: 12px; margin: 34px 0 66px; background: transparent; border: 0; }
+.steps::before { left: 31px; top: 28px; bottom: 28px; width: 1px; background: linear-gradient(var(--gold), rgba(225,174,104,.08)); opacity: .8; }
+.step { grid-template-columns: 64px 1fr; gap: 20px; padding: clamp(24px, 4vw, 38px); border: 1px solid var(--line); border-radius: 4px; background: linear-gradient(135deg, rgba(23,32,29,.98), rgba(27,38,34,.96)) padding-box; box-shadow: 0 14px 36px rgba(0,0,0,.12); }
+.step:hover { border-color: rgba(225,174,104,.48); box-shadow: 0 18px 46px rgba(0,0,0,.2); }
+.step-index { width: 46px; height: 46px; border: 1px solid rgba(225,174,104,.64); border-radius: 3px; background: #121917; color: var(--gold); box-shadow: none; font: 700 18px/1 "Cascadia Code", Consolas, monospace; }
+.step-index::before { content: "→"; top: -14px; right: -6px; color: var(--gold); text-shadow: none; }
+.step::after { background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: .3; }
+.step-example, .local-optimization, .feedback-card, .relay-card, .training-video, .community-card { border-color: var(--line); border-radius: 4px; background: rgba(27,38,34,.72); box-shadow: none; }
+.step-example { border-left-color: var(--gold); }
+.optimization-card, .faq, .download-card { border-color: var(--line); border-radius: 4px; background: rgba(16,23,21,.72); }
+.copy-button, .lyric-head button, .lyric-controls button { border-color: rgba(225,174,104,.5); background: rgba(225,174,104,.08); color: var(--gold); }
+.primary { background: var(--gold); border-color: var(--gold); color: #171510; }
+.primary:hover { background: #efc586; box-shadow: 0 0 24px rgba(225,174,104,.2); }
+.ghost { border-color: var(--line); background: rgba(231,226,215,.04); }
+.lyric-panel { top: 25%; right: clamp(18px, 5vw, 72px); border-color: rgba(225,174,104,.4); border-radius: 4px; background: rgba(19,27,24,.94); box-shadow: 0 20px 50px rgba(0,0,0,.28); }
+.lyric-head { color: var(--gold); }
+.lyric-track p.is-active { color: var(--text); text-shadow: 0 0 14px rgba(225,174,104,.2); }
+.lyric-controls input { accent-color: var(--gold); }
+.music-dock { border-color: rgba(225,174,104,.42); border-radius: 4px; background: rgba(19,27,24,.94); }
+.music-disc { border-color: var(--gold); color: var(--gold); }
+.music-dock small, .music-play { color: var(--gold); }
+.rescue, .helper { border-color: var(--line); }
+.section-title { max-width: 680px; }
+.section-title h2 { letter-spacing: -.03em; }
+@media (max-width: 760px) {
+  .hero { min-height: 900px; }
+  .hero-copy { padding-top: 70px; }
+  .hero-console { bottom: 28px; }
+  .lyric-panel { top: 44%; }
+}
