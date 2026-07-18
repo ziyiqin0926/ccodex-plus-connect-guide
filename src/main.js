@@ -350,6 +350,10 @@ function drawBallPit() {
     pointer.active = true;
   }, { passive: true });
   hero.addEventListener('pointerleave', () => { pointer.active = false; }, { passive: true });
+  hero.addEventListener('pointerdown', () => {
+    if (reducedMotion) return;
+    balls.forEach((ball) => { ball.vy -= .8; ball.vx += (ball.x < pointer.x ? -.35 : .35); });
+  }, { passive: true });
   hero.addEventListener('wheel', (event) => {
     if (reducedMotion) return;
     const impulse = Math.max(-8, Math.min(12, event.deltaY * .018));
@@ -372,7 +376,7 @@ function drawBallPit() {
         const distance = Math.hypot(dx, dy) || 1;
         const reach = 92 + ball.r;
         if (distance < reach) {
-          const force = (1 - distance / reach) * .55;
+          const force = (1 - distance / reach) * 1.15;
           ball.vx += (dx / distance) * force;
           ball.vy += (dy / distance) * force;
         }
@@ -381,6 +385,25 @@ function drawBallPit() {
       ball.y += ball.vy;
       if (ball.x < ball.r || ball.x > w - ball.r) { ball.vx *= -.9; ball.x = Math.max(ball.r, Math.min(w - ball.r, ball.x)); }
       if (ball.y < ball.r || ball.y > h - ball.r) { ball.vy *= -.82; ball.y = Math.max(ball.r, Math.min(h - ball.r, ball.y)); }
+      document.querySelectorAll('.hero-copy, .lyric-panel').forEach((obstacle) => {
+        const box = obstacle.getBoundingClientRect();
+        const canvasBox = canvas.getBoundingClientRect();
+        const left = box.left - canvasBox.left;
+        const right = box.right - canvasBox.left;
+        const top = box.top - canvasBox.top;
+        const bottom = box.bottom - canvasBox.top;
+        if (ball.x + ball.r < left || ball.x - ball.r > right || ball.y + ball.r < top || ball.y - ball.r > bottom) return;
+        const distances = [
+          { edge: 'left', value: Math.abs(ball.x + ball.r - left) },
+          { edge: 'right', value: Math.abs(right - (ball.x - ball.r)) },
+          { edge: 'top', value: Math.abs(ball.y + ball.r - top) },
+          { edge: 'bottom', value: Math.abs(bottom - (ball.y - ball.r)) },
+        ].sort((a, b) => a.value - b.value)[0];
+        if (distances.edge === 'left') { ball.x = left - ball.r; ball.vx = -Math.abs(ball.vx) * .9; }
+        if (distances.edge === 'right') { ball.x = right + ball.r; ball.vx = Math.abs(ball.vx) * .9; }
+        if (distances.edge === 'top') { ball.y = top - ball.r; ball.vy = -Math.abs(ball.vy) * .9; }
+        if (distances.edge === 'bottom') { ball.y = bottom + ball.r; ball.vy = Math.abs(ball.vy) * .9; }
+      });
     });
     for (let a = 0; a < balls.length; a += 1) {
       for (let b = a + 1; b < balls.length; b += 1) {
