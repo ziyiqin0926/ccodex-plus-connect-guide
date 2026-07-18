@@ -545,7 +545,7 @@ if (typeof document !== 'undefined') {
   const creatorNote = document.createElement('p');
   creatorNote.className = 'creator-note';
   creatorNote.textContent = '当然了，你现在看到的这个网站也是 Codex 纯一体生成的，没写一行代码，我相信你也可以。';
-  $('#progressPanel')?.append(creatorNote);
+  document.querySelector('.hero-copy')?.append(creatorNote);
   renderSteps();
   $('#steps')?.after($('#progressPanel'));
   renderFaqs();

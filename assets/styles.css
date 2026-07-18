@@ -887,7 +887,7 @@ input[type="search"] { background: #1f2937; border-color: #475569; color: var(--
 .github-promo h2 { margin-bottom: 8px; }
 .github-promo p:not(.eyebrow) { max-width: 680px; margin-bottom: 0; }
 .github-promo .link-button { flex: 0 0 auto; }
-.creator-note { grid-column: 1 / -1; margin: 8px 0 0; color: rgba(196,181,253,.86); font-size: 14px; letter-spacing: .02em; }
+.creator-note { margin: 18px 0 0; max-width: 560px; color: rgba(196,181,253,.9); font-size: 14px; line-height: 1.7; }
 @media (max-width: 760px) { .github-promo { display: grid; } }
 
 /* final layout balance */
