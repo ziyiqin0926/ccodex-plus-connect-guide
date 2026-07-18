@@ -293,6 +293,14 @@ function bindLyrics() {
     track.style.setProperty('--lyric-shift', `${-active * 58 + offset}px`);
     track.querySelectorAll('p').forEach((node, index) => node.classList.toggle('is-active', index === active));
   };
+  track.addEventListener('click', (event) => {
+    const line = event.target.closest('[data-lyric-index]');
+    if (!line) return;
+    active = Number(line.dataset.lyricIndex);
+    playing = false;
+    $('#lyricToggle').textContent = '播放';
+    render();
+  });
   const step = (delta) => { active = (active + delta + lyricLines.length) % lyricLines.length; render(); };
   const timer = setInterval(() => { if (playing) step(1); }, 3600);
   $('#lyricToggle')?.addEventListener('click', (event) => {

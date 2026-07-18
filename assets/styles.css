@@ -892,6 +892,17 @@ input[type="search"] { background: #1f2937; border-color: #475569; color: var(--
 .lyric-panel:hover .lyric-controls, .lyric-panel:focus-within .lyric-controls { display: flex; }
 .lyric-controls label, .lyric-controls button { display: none; }
 .lyric-controls input { width: 132px; height: 18px; margin: 0; transform: rotate(-90deg); accent-color: var(--blue); opacity: .82; cursor: ns-resize; }
+.lyric-panel { width: min(460px, 40vw); min-height: 280px; padding: 14px 34px 12px 18px; border: 1px solid rgba(129,140,248,.42) !important; border-radius: 18px; background: rgba(15,23,42,.58) !important; box-shadow: 0 18px 50px rgba(2,6,23,.3), inset 0 0 24px rgba(129,140,248,.06) !important; backdrop-filter: blur(12px); }
+.lyric-head { justify-content: space-between; }
+.lyric-head > span { display: block; color: rgba(165,180,252,.85); font-size: 10px; letter-spacing: .14em; }
+.lyric-head > span::after { content: ' · MEMORY NOTE'; color: rgba(148,163,184,.7); }
+.lyric-head button { color: #a5b4fc; }
+.lyric-controls { display: flex; }
+.lyric-track p { cursor: pointer; user-select: none; }
+.lyric-track p:hover { color: rgba(238,242,255,.72); }
+@media (max-width: 760px) {
+  .lyric-panel { width: calc(100% - 52px); min-width: 0; padding-right: 28px; }
+}
 @media (max-width: 760px) {
   .lyric-panel { top: 45%; right: 18px; width: calc(100% - 36px); min-width: 0; transform: none; }
 }
