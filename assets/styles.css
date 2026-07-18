@@ -883,6 +883,11 @@ h1, h2, h3 { color: var(--text); }
 .music-disc { background: rgba(129,140,248,.08); box-shadow: 0 0 18px rgba(129,140,248,.16); }
 .music-disc, .music-dock small, .music-play { color: var(--blue); }
 input[type="search"] { background: #1f2937; border-color: #475569; color: var(--text); }
+.github-promo { display: flex; align-items: center; justify-content: space-between; gap: 28px; margin: 56px 0 18px; padding: 28px 0; border-top: 1px solid rgba(129,140,248,.28); border-bottom: 1px solid rgba(129,140,248,.28); }
+.github-promo h2 { margin-bottom: 8px; }
+.github-promo p:not(.eyebrow) { max-width: 680px; margin-bottom: 0; }
+.github-promo .link-button { flex: 0 0 auto; }
+@media (max-width: 760px) { .github-promo { display: grid; } }
 
 /* final layout balance */
 .lyric-panel { top: 31%; right: clamp(28px, 7vw, 112px); width: min(470px, 40vw); transform: translateY(-18%); resize: none; border: 0 !important; background: transparent !important; box-shadow: none !important; }
