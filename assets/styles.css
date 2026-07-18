@@ -88,7 +88,7 @@ nav {
 }
 
 nav strong { margin-right: auto; color: var(--green); }
-nav strong::before { content: "鈼?; margin-right: 8px; color: var(--pink); }
+nav strong::before { content: "*"; margin-right: 8px; color: var(--violet); }
 nav a { color: var(--muted); text-decoration: none; }
 
 .hero-copy {
@@ -273,7 +273,7 @@ main { padding: 28px clamp(18px, 5vw, 72px) 80px; }
   font-size: 28px;
   font-weight: 800;
 }
-.step-index::before { content: "鉁?; position: absolute; top: -11px; right: -8px; color: var(--pink); font-size: 12px; text-shadow: 0 0 12px var(--pink); }
+.step-index::before { content: "OK"; position: absolute; top: -11px; right: -8px; color: var(--violet); font-size: 10px; text-shadow: 0 0 12px rgba(79,70,229,.35); }
 
 .prompt-armory, .rescue {
   padding: 54px 0;
