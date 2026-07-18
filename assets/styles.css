@@ -852,6 +852,18 @@ h1, h2, h3 { color: var(--text); }
 .step { background: transparent; border: 0; border-radius: 0; box-shadow: none; }
 .step:hover { border-color: transparent; box-shadow: none; transform: none; }
 .step:nth-child(-n+3) { border-bottom: 1px solid rgba(71,85,105,.72); }
+.lyric-panel { top: 18%; right: 4%; width: min(390px, 34vw); min-width: 250px; min-height: 250px; padding: 8px 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; }
+.lyric-head { color: rgba(165,180,252,.82); }
+.lyric-head button, .lyric-controls button { border-color: rgba(129,140,248,.38); background: rgba(17,24,39,.28); }
+.lyric-viewport { height: 218px; margin: 18px 0 10px; mask-image: linear-gradient(transparent, #000 25%, #000 75%, transparent); -webkit-mask-image: linear-gradient(transparent, #000 25%, #000 75%, transparent); }
+.lyric-track p { min-height: 70px; color: rgba(226,232,240,.16); font-size: 17px; text-shadow: 0 0 18px rgba(129,140,248,.06); }
+.lyric-track p.is-active { color: rgba(238,242,255,.95); text-shadow: 0 0 22px rgba(129,140,248,.35); }
+.lyric-controls { color: rgba(203,213,225,.7); }
+.lyric-controls input { opacity: .72; }
+@media (max-width: 760px) {
+  .lyric-panel { top: 42%; right: 18px; width: calc(100% - 36px); min-width: 0; }
+  .lyric-viewport { height: 170px; }
+}
 .ghost { border-color: #475569; background: #1f2937; color: var(--text); }
 .lyric-panel { border-color: rgba(129,140,248,.42); background: rgba(17,24,39,.94); box-shadow: 0 14px 36px rgba(2,6,23,.46); }
 .lyric-track p { color: rgba(229,231,235,.34); }
