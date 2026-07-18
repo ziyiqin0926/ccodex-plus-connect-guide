@@ -399,6 +399,7 @@ function drawHero(canvasSelector = '#heroCanvas', hostSelector = '.hero') {
 
 if (typeof document !== 'undefined') {
   renderSteps();
+  $('#steps')?.after($('#progressPanel'));
   renderFaqs();
   renderProgress();
   bindEvents();

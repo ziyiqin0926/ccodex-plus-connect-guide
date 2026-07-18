@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CODEX++ GPT 部署电脑连接助手</title>
-    <link rel="stylesheet" href="assets/styles.css?v=20260719-layout-v1">
+    <link rel="stylesheet" href="assets/styles.css?v=20260719-progress-flow-v1">
   </head>
   <body>
     <header class="hero">
@@ -20,7 +20,7 @@
         <p>下载安装到配置 CODEX++，再连上运行 GPT Agent 的部署电脑。先看教学视频，卡住就查 FAQ 或进群提问。</p>
         <div class="hero-actions">
           <a class="primary link-button" href="#steps">开始第一步</a>
-          <a class="ghost link-button" href="#rescue">我已经卡住了</a>
+          <a class="ghost link-button" href="#community">我已经卡住了</a>
         </div>
       </section>
       <aside class="hero-console" aria-label="连接状态预览">
@@ -40,7 +40,7 @@
 
     <main>
       <canvas id="mainCanvas" aria-hidden="true"></canvas>
-      <section class="progress-panel">
+      <section class="progress-panel" id="progressPanel">
         <div>
           <span id="progressText">0/4 已完成</span>
           <div class="bar"><i id="progressBar"></i></div>
@@ -131,6 +131,6 @@
       <span><small>背景音乐</small><strong>Mixkit · Deep Urban</strong></span>
       <span class="music-play" aria-hidden="true">▶</span>
     </button>
-    <script type="module" src="src/main.js?v=20260719-layout-v1"></script>
+    <script type="module" src="src/main.js?v=20260719-progress-flow-v1"></script>
   </body>
 </html>
