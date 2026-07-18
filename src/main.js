@@ -308,9 +308,9 @@ function bindLyrics() {
   window.addEventListener('beforeunload', () => clearInterval(timer), { once: true });
 }
 
-function drawHero() {
-  const canvas = $('#heroCanvas');
-  const hero = document.querySelector('.hero');
+function drawHero(canvasSelector = '#heroCanvas', hostSelector = '.hero') {
+  const canvas = $(canvasSelector);
+  const hero = document.querySelector(hostSelector);
   if (!canvas || !hero) return;
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
@@ -404,4 +404,5 @@ if (typeof document !== 'undefined') {
   bindEvents();
   bindScrollReveal();
   drawHero();
+  drawHero('#mainCanvas', 'main');
 }
