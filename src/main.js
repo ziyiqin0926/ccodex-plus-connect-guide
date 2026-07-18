@@ -310,6 +310,8 @@ function bindLyrics() {
 
 function drawHero() {
   const canvas = $('#heroCanvas');
+  const hero = document.querySelector('.hero');
+  if (!canvas || !hero) return;
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
@@ -317,6 +319,21 @@ function drawHero() {
   canvas.height = rect.height * dpr;
   ctx.scale(dpr, dpr);
 
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const ripples = [];
+  const pointer = { x: rect.width * 0.72, y: rect.height * 0.5, active: false };
+  hero.addEventListener('pointermove', (event) => {
+    const box = canvas.getBoundingClientRect();
+    pointer.x = event.clientX - box.left;
+    pointer.y = event.clientY - box.top;
+    pointer.active = true;
+  }, { passive: true });
+  hero.addEventListener('pointerleave', () => { pointer.active = false; }, { passive: true });
+  hero.addEventListener('pointerdown', (event) => {
+    if (reducedMotion) return;
+    const box = canvas.getBoundingClientRect();
+    ripples.push({ x: event.clientX - box.left, y: event.clientY - box.top, age: 0, strength: 1 });
+  });
   let tick = 0;
   function frame() {
     const w = rect.width;
@@ -338,9 +355,36 @@ function drawHero() {
       ctx.fillRect(x - 2, y - 2, 4, 4);
     }
 
+    if (!reducedMotion) {
+      if (pointer.active) {
+        for (let ring = 0; ring < 4; ring += 1) {
+          const radius = 26 + ring * 22 + Math.sin(tick * 0.04 + ring) * 3;
+          ctx.beginPath();
+          ctx.arc(pointer.x, pointer.y, radius, 0, Math.PI * 2);
+          ctx.strokeStyle = ring % 2 ? '#8ba3ff' : '#27f5c7';
+          ctx.globalAlpha = 0.16 - ring * 0.025;
+          ctx.lineWidth = ring === 0 ? 1.8 : 1;
+          ctx.stroke();
+        }
+      }
+      for (let i = ripples.length - 1; i >= 0; i -= 1) {
+        const ripple = ripples[i];
+        ripple.age += 1;
+        const radius = ripple.age * 5;
+        const alpha = Math.max(0, 0.42 - ripple.age / 120);
+        ctx.beginPath();
+        ctx.arc(ripple.x, ripple.y, radius, 0, Math.PI * 2);
+        ctx.strokeStyle = '#a78bfa';
+        ctx.globalAlpha = alpha;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        if (ripple.age > 120) ripples.splice(i, 1);
+      }
+    }
+
     ctx.globalAlpha = 1;
     tick += 1;
-    requestAnimationFrame(frame);
+    if (!reducedMotion) requestAnimationFrame(frame);
   }
   frame();
 }
