@@ -308,6 +308,99 @@ function bindLyrics() {
   window.addEventListener('beforeunload', () => clearInterval(timer), { once: true });
 }
 
+function drawBallPit() {
+  const canvas = $('#heroCanvas');
+  const hero = document.querySelector('.hero');
+  if (!canvas || !hero) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const pointer = { x: rect.width * .72, y: rect.height * .5, active: false };
+  const colors = ['#818cf8', '#a78bfa', '#34d399', '#60a5fa'];
+  const balls = Array.from({ length: 34 }, (_, index) => ({
+    x: 40 + (index * 83) % Math.max(100, rect.width - 80),
+    y: 30 + (index * 47) % Math.max(100, rect.height - 120),
+    vx: (index % 2 ? 1 : -1) * .15,
+    vy: 0,
+    r: 5 + (index % 5) * 2,
+    color: colors[index % colors.length],
+  }));
+  hero.addEventListener('pointermove', (event) => {
+    const box = canvas.getBoundingClientRect();
+    pointer.x = event.clientX - box.left;
+    pointer.y = event.clientY - box.top;
+    pointer.active = true;
+  }, { passive: true });
+  hero.addEventListener('pointerleave', () => { pointer.active = false; }, { passive: true });
+  hero.addEventListener('wheel', (event) => {
+    if (reducedMotion) return;
+    const impulse = Math.max(-8, Math.min(12, event.deltaY * .018));
+    balls.forEach((ball, index) => { ball.vy += impulse + (index % 3) * .08; });
+  }, { passive: true });
+  function frame() {
+    const w = rect.width;
+    const h = rect.height;
+    ctx.clearRect(0, 0, w, h);
+    balls.forEach((ball) => {
+      ball.vy += reducedMotion ? 0 : .035;
+      ball.vx *= .998;
+      ball.vy *= .998;
+      if (pointer.active && !reducedMotion) {
+        const dx = ball.x - pointer.x;
+        const dy = ball.y - pointer.y;
+        const distance = Math.hypot(dx, dy) || 1;
+        const reach = 92 + ball.r;
+        if (distance < reach) {
+          const force = (1 - distance / reach) * .55;
+          ball.vx += (dx / distance) * force;
+          ball.vy += (dy / distance) * force;
+        }
+      }
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+      if (ball.x < ball.r || ball.x > w - ball.r) { ball.vx *= -.78; ball.x = Math.max(ball.r, Math.min(w - ball.r, ball.x)); }
+      if (ball.y < ball.r || ball.y > h - ball.r) { ball.vy *= -.72; ball.y = Math.max(ball.r, Math.min(h - ball.r, ball.y)); }
+    });
+    for (let a = 0; a < balls.length; a += 1) {
+      for (let b = a + 1; b < balls.length; b += 1) {
+        const first = balls[a];
+        const second = balls[b];
+        const dx = second.x - first.x;
+        const dy = second.y - first.y;
+        const distance = Math.hypot(dx, dy) || 1;
+        const minDistance = first.r + second.r;
+        if (distance >= minDistance) continue;
+        const nx = dx / distance;
+        const ny = dy / distance;
+        const overlap = (minDistance - distance) * .5;
+        first.x -= nx * overlap; first.y -= ny * overlap;
+        second.x += nx * overlap; second.y += ny * overlap;
+        const impulse = (second.vx - first.vx) * nx + (second.vy - first.vy) * ny;
+        if (impulse > 0) continue;
+        first.vx += impulse * nx * .22; first.vy += impulse * ny * .22;
+        second.vx -= impulse * nx * .22; second.vy -= impulse * ny * .22;
+      }
+    }
+    balls.forEach((ball) => {
+      const glow = ctx.createRadialGradient(ball.x - ball.r * .4, ball.y - ball.r * .5, 1, ball.x, ball.y, ball.r * 3.5);
+      glow.addColorStop(0, `${ball.color}cc`);
+      glow.addColorStop(1, `${ball.color}00`);
+      ctx.fillStyle = glow;
+      ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r * 3.5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = ball.color;
+      ctx.globalAlpha = .7;
+      ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    if (!reducedMotion) requestAnimationFrame(frame);
+  }
+  frame();
+}
+
 function drawHero(canvasSelector = '#heroCanvas', hostSelector = '.hero') {
   const canvas = $(canvasSelector);
   const hero = document.querySelector(hostSelector);
@@ -404,6 +497,6 @@ if (typeof document !== 'undefined') {
   renderProgress();
   bindEvents();
   bindScrollReveal();
-  drawHero();
+  drawBallPit();
   drawHero('#mainCanvas', 'main');
 }
