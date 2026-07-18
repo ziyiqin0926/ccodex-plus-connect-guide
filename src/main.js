@@ -498,5 +498,4 @@ if (typeof document !== 'undefined') {
   bindEvents();
   bindScrollReveal();
   drawBallPit();
-  drawHero('#mainCanvas', 'main');
 }
