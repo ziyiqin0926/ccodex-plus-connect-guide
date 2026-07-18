@@ -888,6 +888,10 @@ input[type="search"] { background: #1f2937; border-color: #475569; color: var(--
 .lyric-panel { top: 31%; right: clamp(28px, 7vw, 112px); width: min(470px, 40vw); transform: translateY(-18%); resize: none; border: 0 !important; background: transparent !important; box-shadow: none !important; }
 .lyric-viewport { margin-top: 4px; }
 .music-dock { right: clamp(24px, 5vw, 72px); bottom: 28px; }
+.lyric-controls { display: none; position: absolute; top: 20px; right: -24px; bottom: 20px; width: 18px; align-items: center; justify-content: center; }
+.lyric-panel:hover .lyric-controls, .lyric-panel:focus-within .lyric-controls { display: flex; }
+.lyric-controls label, .lyric-controls button { display: none; }
+.lyric-controls input { width: 132px; height: 18px; margin: 0; transform: rotate(-90deg); accent-color: var(--blue); opacity: .82; cursor: ns-resize; }
 @media (max-width: 760px) {
   .lyric-panel { top: 45%; right: 18px; width: calc(100% - 36px); min-width: 0; transform: none; }
 }
