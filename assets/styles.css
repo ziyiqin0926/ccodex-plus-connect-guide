@@ -835,7 +835,7 @@ nav strong, nav a, .eyebrow, .search-label { color: var(--blue); }
 .hero { border-color: transparent; background: linear-gradient(180deg, #111827 0%, #182238 48%, #211b36 100%); }
 .hero::before { background: linear-gradient(135deg, rgba(99,102,241,.17), rgba(124,58,237,.08)); }
 .hero::after { background: rgba(52,211,153,.045); }
-#heroCanvas { opacity: .34; mix-blend-mode: screen; }
+#heroCanvas { opacity: .68; mix-blend-mode: screen; }
 main { margin-top: -1px; background: linear-gradient(180deg, #211b36 0%, #1b2440 28%, #111827 100%); }
 #mainCanvas { display: none; }
 h1, h2, h3 { color: var(--text); }

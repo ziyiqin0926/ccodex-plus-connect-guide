@@ -320,15 +320,20 @@ function drawBallPit() {
   ctx.scale(dpr, dpr);
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const pointer = { x: rect.width * .72, y: rect.height * .5, active: false };
-  const colors = ['#818cf8', '#a78bfa', '#34d399', '#60a5fa'];
-  const balls = Array.from({ length: 42 }, (_, index) => ({
-    x: 40 + (index * 83) % Math.max(100, rect.width - 80),
-    y: 30 + (index * 47) % Math.max(100, rect.height - 120),
-    vx: (index % 2 ? 1 : -1) * (.45 + (index % 4) * .12),
-    vy: ((index % 5) - 2) * .34,
-    r: 7 + (index % 5) * 2,
+  const colors = ['#9fe4d2', '#9ab7ff', '#f4bf9c', '#dbe795', '#d9c7ff'];
+  const seed = (value) => (Math.sin(value * 12.9898) * 43758.5453) % 1;
+  const balls = Array.from({ length: 28 }, (_, index) => {
+    const side = index % 3;
+    const randomX = Math.abs(seed(index + 2));
+    return {
+    x: side === 0 ? 20 + randomX * rect.width * .22 : side === 1 ? rect.width * .76 + randomX * rect.width * .22 : rect.width * .28 + randomX * rect.width * .44,
+    y: 20 + Math.abs(seed(index + 8)) * rect.height * .9,
+    vx: (index % 2 ? 1 : -1) * (.35 + Math.abs(seed(index + 4)) * .8),
+    vy: ((index % 5) - 2) * .26,
+    r: 18 + Math.abs(seed(index + 6)) * 30,
     color: colors[index % colors.length],
-  }));
+    };
+  });
   hero.addEventListener('pointermove', (event) => {
     const box = canvas.getBoundingClientRect();
     pointer.x = event.clientX - box.left;
@@ -386,14 +391,16 @@ function drawBallPit() {
       }
     }
     balls.forEach((ball) => {
-      const glow = ctx.createRadialGradient(ball.x - ball.r * .4, ball.y - ball.r * .5, 1, ball.x, ball.y, ball.r * 3.5);
-      glow.addColorStop(0, `${ball.color}cc`);
-      glow.addColorStop(1, `${ball.color}00`);
+      const glow = ctx.createRadialGradient(ball.x - ball.r * .35, ball.y - ball.r * .42, ball.r * .04, ball.x, ball.y, ball.r * 1.2);
+      glow.addColorStop(0, '#ffffffd9');
+      glow.addColorStop(.18, `${ball.color}f2`);
+      glow.addColorStop(.75, `${ball.color}cc`);
+      glow.addColorStop(1, `${ball.color}55`);
       ctx.fillStyle = glow;
-      ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r * 3.5, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = ball.color;
-      ctx.globalAlpha = .7;
       ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.48)';
+      ctx.lineWidth = Math.max(1, ball.r * .035);
+      ctx.stroke();
     });
     ctx.globalAlpha = 1;
     if (!reducedMotion) requestAnimationFrame(frame);
