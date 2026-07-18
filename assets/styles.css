@@ -903,6 +903,11 @@ input[type="search"] { background: #1f2937; border-color: #475569; color: var(--
 @media (max-width: 760px) {
   .lyric-panel { width: calc(100% - 52px); min-width: 0; padding-right: 28px; }
 }
+.progress-panel { border-top: 1px solid rgba(71,85,105,.72); border-bottom: 1px solid rgba(71,85,105,.72); }
+#steps { border-top: 0; }
+.step, .step-example, .local-optimization, .feedback-card, .relay-card, .training-video, .community-card, .optimization-card, .faq, .download-card { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
+.step:nth-child(-n+3) { border-bottom-color: rgba(129,140,248,.32) !important; }
+.step-example { border-left: 0 !important; }
 @media (max-width: 760px) {
   .lyric-panel { top: 45%; right: 18px; width: calc(100% - 36px); min-width: 0; transform: none; }
 }
