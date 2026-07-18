@@ -2,6 +2,8 @@
 
 面向新手的 Codex++ GPT 部署与配置教程。
 
+![Codex 四步接入 C4X 预览图](assets/codex-c4x-preview.png)
+
 ## 在线入口
 
 https://ziyiqin0926.github.io/ccodex-plus-connect-guide/
