@@ -321,12 +321,12 @@ function drawBallPit() {
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const pointer = { x: rect.width * .72, y: rect.height * .5, active: false };
   const colors = ['#818cf8', '#a78bfa', '#34d399', '#60a5fa'];
-  const balls = Array.from({ length: 34 }, (_, index) => ({
+  const balls = Array.from({ length: 42 }, (_, index) => ({
     x: 40 + (index * 83) % Math.max(100, rect.width - 80),
     y: 30 + (index * 47) % Math.max(100, rect.height - 120),
-    vx: (index % 2 ? 1 : -1) * .15,
-    vy: 0,
-    r: 5 + (index % 5) * 2,
+    vx: (index % 2 ? 1 : -1) * (.45 + (index % 4) * .12),
+    vy: ((index % 5) - 2) * .34,
+    r: 7 + (index % 5) * 2,
     color: colors[index % colors.length],
   }));
   hero.addEventListener('pointermove', (event) => {
@@ -346,9 +346,9 @@ function drawBallPit() {
     const h = rect.height;
     ctx.clearRect(0, 0, w, h);
     balls.forEach((ball) => {
-      ball.vy += reducedMotion ? 0 : .035;
-      ball.vx *= .998;
-      ball.vy *= .998;
+      ball.vy += reducedMotion ? 0 : .085;
+      ball.vx *= .999;
+      ball.vy *= .999;
       if (pointer.active && !reducedMotion) {
         const dx = ball.x - pointer.x;
         const dy = ball.y - pointer.y;
@@ -362,8 +362,8 @@ function drawBallPit() {
       }
       ball.x += ball.vx;
       ball.y += ball.vy;
-      if (ball.x < ball.r || ball.x > w - ball.r) { ball.vx *= -.78; ball.x = Math.max(ball.r, Math.min(w - ball.r, ball.x)); }
-      if (ball.y < ball.r || ball.y > h - ball.r) { ball.vy *= -.72; ball.y = Math.max(ball.r, Math.min(h - ball.r, ball.y)); }
+      if (ball.x < ball.r || ball.x > w - ball.r) { ball.vx *= -.9; ball.x = Math.max(ball.r, Math.min(w - ball.r, ball.x)); }
+      if (ball.y < ball.r || ball.y > h - ball.r) { ball.vy *= -.82; ball.y = Math.max(ball.r, Math.min(h - ball.r, ball.y)); }
     });
     for (let a = 0; a < balls.length; a += 1) {
       for (let b = a + 1; b < balls.length; b += 1) {
@@ -381,8 +381,8 @@ function drawBallPit() {
         second.x += nx * overlap; second.y += ny * overlap;
         const impulse = (second.vx - first.vx) * nx + (second.vy - first.vy) * ny;
         if (impulse > 0) continue;
-        first.vx += impulse * nx * .22; first.vy += impulse * ny * .22;
-        second.vx -= impulse * nx * .22; second.vy -= impulse * ny * .22;
+        first.vx += impulse * nx * .5; first.vy += impulse * ny * .5;
+        second.vx -= impulse * nx * .5; second.vy -= impulse * ny * .5;
       }
     }
     balls.forEach((ball) => {
