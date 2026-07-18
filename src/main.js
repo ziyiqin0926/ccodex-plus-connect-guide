@@ -327,6 +327,7 @@ function drawHero() {
     pointer.x = event.clientX - box.left;
     pointer.y = event.clientY - box.top;
     pointer.active = true;
+    if (reducedMotion) frame();
   }, { passive: true });
   hero.addEventListener('pointerleave', () => { pointer.active = false; }, { passive: true });
   hero.addEventListener('pointerdown', (event) => {
@@ -355,14 +356,14 @@ function drawHero() {
       ctx.fillRect(x - 2, y - 2, 4, 4);
     }
 
-    if (!reducedMotion) {
+    {
       if (pointer.active) {
         for (let ring = 0; ring < 4; ring += 1) {
-          const radius = 26 + ring * 22 + Math.sin(tick * 0.04 + ring) * 3;
+          const radius = 34 + ring * 28 + Math.sin(tick * 0.04 + ring) * 4;
           ctx.beginPath();
           ctx.arc(pointer.x, pointer.y, radius, 0, Math.PI * 2);
           ctx.strokeStyle = ring % 2 ? '#8ba3ff' : '#27f5c7';
-          ctx.globalAlpha = 0.16 - ring * 0.025;
+          ctx.globalAlpha = 0.26 - ring * 0.035;
           ctx.lineWidth = ring === 0 ? 1.8 : 1;
           ctx.stroke();
         }
@@ -371,7 +372,7 @@ function drawHero() {
         const ripple = ripples[i];
         ripple.age += 1;
         const radius = ripple.age * 5;
-        const alpha = Math.max(0, 0.42 - ripple.age / 120);
+        const alpha = Math.max(0, 0.62 - ripple.age / 120);
         ctx.beginPath();
         ctx.arc(ripple.x, ripple.y, radius, 0, Math.PI * 2);
         ctx.strokeStyle = '#a78bfa';
