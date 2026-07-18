@@ -322,6 +322,14 @@ function drawHero() {
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const ripples = [];
   const pointer = { x: rect.width * 0.72, y: rect.height * 0.5, active: false };
+  const dots = [];
+  const columns = Math.ceil(rect.width / 34);
+  const rows = Math.ceil(rect.height / 34);
+  for (let row = 0; row <= rows; row += 1) {
+    for (let column = 0; column <= columns; column += 1) {
+      dots.push({ x: column * 34, y: row * 34, phase: (column + row) * 0.38 });
+    }
+  }
   hero.addEventListener('pointermove', (event) => {
     const box = canvas.getBoundingClientRect();
     pointer.x = event.clientX - box.left;
@@ -340,21 +348,20 @@ function drawHero() {
     const w = rect.width;
     const h = rect.height;
     ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = '#050505';
-    ctx.fillRect(0, 0, w, h);
-
-    for (let i = 0; i < 44; i += 1) {
-      const x = (i * 97 + tick * (0.35 + (i % 5) * 0.08)) % (w + 160) - 80;
-      const y = 40 + ((i * 53) % Math.max(80, h - 80));
-      ctx.strokeStyle = i % 3 === 0 ? '#27f5c7' : i % 3 === 1 ? '#ffce4a' : '#8ba3ff';
-      ctx.globalAlpha = 0.18 + (i % 7) * 0.04;
+    dots.forEach((dot, index) => {
+      const distance = Math.hypot(dot.x - pointer.x, dot.y - pointer.y);
+      const influence = pointer.active ? Math.max(0, 1 - distance / 260) : 0;
+      const wave = Math.sin(tick * 0.035 + dot.phase) * 3;
+      const x = dot.x + (pointer.active ? (dot.x - pointer.x) * influence * 0.08 : 0);
+      const y = dot.y + wave - influence * 16;
+      const radius = 1.2 + influence * 2.1;
+      const palette = index % 3 === 0 ? '#818cf8' : index % 3 === 1 ? '#a78bfa' : '#34d399';
       ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(w - x * 0.2, h - y * 0.35);
-      ctx.stroke();
-      ctx.fillStyle = ctx.strokeStyle;
-      ctx.fillRect(x - 2, y - 2, 4, 4);
-    }
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = palette;
+      ctx.globalAlpha = 0.16 + influence * 0.42;
+      ctx.fill();
+    });
 
     {
       if (pointer.active) {
