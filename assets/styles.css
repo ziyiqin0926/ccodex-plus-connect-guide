@@ -884,3 +884,11 @@ h1, h2, h3 { color: var(--text); }
 .music-disc, .music-dock small, .music-play { color: var(--blue); }
 input[type="search"] { background: #1f2937; border-color: #475569; color: var(--text); }
 
+/* final layout balance */
+.lyric-panel { top: 31%; right: clamp(28px, 7vw, 112px); width: min(470px, 40vw); transform: translateY(-18%); resize: none; border: 0 !important; background: transparent !important; box-shadow: none !important; }
+.lyric-viewport { margin-top: 4px; }
+.music-dock { right: clamp(24px, 5vw, 72px); bottom: 28px; }
+@media (max-width: 760px) {
+  .lyric-panel { top: 45%; right: 18px; width: calc(100% - 36px); min-width: 0; transform: none; }
+}
+
