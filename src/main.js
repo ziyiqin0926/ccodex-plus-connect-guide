@@ -332,6 +332,7 @@ function drawBallPit() {
     vy: ((index % 5) - 2) * .26,
     r: 18 + Math.abs(seed(index + 6)) * 30,
     color: colors[index % colors.length],
+    phase: index * .73,
     };
   });
   hero.addEventListener('pointermove', (event) => {
@@ -346,12 +347,15 @@ function drawBallPit() {
     const impulse = Math.max(-8, Math.min(12, event.deltaY * .018));
     balls.forEach((ball, index) => { ball.vy += impulse + (index % 3) * .08; });
   }, { passive: true });
+  let tick = 0;
   function frame() {
     const w = rect.width;
     const h = rect.height;
     ctx.clearRect(0, 0, w, h);
     balls.forEach((ball) => {
-      ball.vy += reducedMotion ? 0 : .085;
+      ball.vy += .12;
+      ball.vx += Math.sin(tick * .018 + ball.phase) * .012;
+      ball.vy += Math.cos(tick * .014 + ball.phase) * .008;
       ball.vx *= .999;
       ball.vy *= .999;
       if (pointer.active && !reducedMotion) {
@@ -392,18 +396,20 @@ function drawBallPit() {
     }
     balls.forEach((ball) => {
       const glow = ctx.createRadialGradient(ball.x - ball.r * .35, ball.y - ball.r * .42, ball.r * .04, ball.x, ball.y, ball.r * 1.2);
-      glow.addColorStop(0, '#ffffffd9');
-      glow.addColorStop(.18, `${ball.color}f2`);
-      glow.addColorStop(.75, `${ball.color}cc`);
-      glow.addColorStop(1, `${ball.color}55`);
+      glow.addColorStop(0, '#ffffffee');
+      glow.addColorStop(.16, `${ball.color}d9`);
+      glow.addColorStop(.72, `${ball.color}9e`);
+      glow.addColorStop(1, `${ball.color}22`);
       ctx.fillStyle = glow;
       ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = 'rgba(255,255,255,.48)';
+      ctx.globalAlpha = .72;
+      ctx.strokeStyle = 'rgba(255,255,255,.68)';
       ctx.lineWidth = Math.max(1, ball.r * .035);
       ctx.stroke();
     });
     ctx.globalAlpha = 1;
-    if (!reducedMotion) requestAnimationFrame(frame);
+    tick += 1;
+    requestAnimationFrame(frame);
   }
   frame();
 }
