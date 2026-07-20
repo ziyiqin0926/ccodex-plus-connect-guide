@@ -329,6 +329,7 @@ function drawBallPit() {
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const pointer = { x: rect.width * .72, y: rect.height * .5, active: false };
   const colors = ['#9fe4d2', '#9ab7ff', '#f4bf9c', '#dbe795', '#d9c7ff'];
+  const fireworks = [];
   const seed = (value) => (Math.sin(value * 12.9898) * 43758.5453) % 1;
   const balls = Array.from({ length: 28 }, (_, index) => {
     const side = index % 3;
@@ -349,9 +350,19 @@ function drawBallPit() {
     pointer.y = event.clientY - box.top;
     pointer.active = pointer.x >= 0 && pointer.x <= box.width && pointer.y >= 0 && pointer.y <= box.height;
   }, { passive: true });
-  window.addEventListener('pointerdown', () => {
-    if (!pointer.active) return;
-    balls.forEach((ball) => { ball.vy -= .8; ball.vx += (ball.x < pointer.x ? -.35 : .35); });
+  hero.addEventListener('pointerdown', (event) => {
+    if (reducedMotion) return;
+    const box = canvas.getBoundingClientRect();
+    const x = event.clientX - box.left;
+    const y = event.clientY - box.top;
+    if (x < 0 || x > box.width || y < 0 || y > box.height) return;
+    const palette = ['#a5b4fc', '#c4b5fd', '#6ee7b7', '#f0abfc'];
+    const color = palette[Math.floor(Math.random() * palette.length)];
+    for (let index = 0; index < 28; index += 1) {
+      const angle = (Math.PI * 2 * index) / 28 + Math.random() * .18;
+      const speed = 1.8 + Math.random() * 3.8;
+      fireworks.push({ x, y, px: x, py: y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, age: 0, life: 34 + Math.random() * 22, color, size: 1 + Math.random() * 1.8 });
+    }
   }, { passive: true });
   hero.addEventListener('wheel', (event) => {
     if (reducedMotion) return;
@@ -437,6 +448,29 @@ function drawBallPit() {
       ctx.lineWidth = Math.max(1, ball.r * .035);
       ctx.stroke();
     });
+    for (let index = fireworks.length - 1; index >= 0; index -= 1) {
+      const spark = fireworks[index];
+      spark.px = spark.x;
+      spark.py = spark.y;
+      spark.x += spark.vx;
+      spark.y += spark.vy;
+      spark.vx *= .965;
+      spark.vy = spark.vy * .965 + .075;
+      spark.age += 1;
+      const alpha = Math.max(0, 1 - spark.age / spark.life);
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = spark.color;
+      ctx.lineWidth = spark.size;
+      ctx.beginPath();
+      ctx.moveTo(spark.px, spark.py);
+      ctx.lineTo(spark.x, spark.y);
+      ctx.stroke();
+      ctx.fillStyle = spark.color;
+      ctx.beginPath();
+      ctx.arc(spark.x, spark.y, spark.size * 1.25, 0, Math.PI * 2);
+      ctx.fill();
+      if (spark.age >= spark.life) fireworks.splice(index, 1);
+    }
     if (pointer.active) {
       ctx.globalAlpha = .42;
       ctx.strokeStyle = '#a5b4fc';
