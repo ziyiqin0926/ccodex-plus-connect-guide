@@ -452,6 +452,42 @@ function drawBallPit() {
   frame();
 }
 
+function initTargetCursor() {
+  if (window.matchMedia?.('(pointer: coarse)').matches) return;
+  const cursor = document.createElement('div');
+  cursor.className = 'target-cursor';
+  cursor.innerHTML = '<span></span><i></i><b></b><em></em>';
+  document.body.append(cursor);
+  document.body.classList.add('has-target-cursor');
+  const pointer = { x: -100, y: -100, tx: -100, ty: -100, target: null };
+  const isInteractive = (node) => node?.closest?.('a, button, input, [role="button"], .optimization-card, .faq, .download-card');
+  document.addEventListener('pointermove', (event) => { pointer.tx = event.clientX; pointer.ty = event.clientY; }, { passive: true });
+  document.addEventListener('pointerover', (event) => {
+    pointer.target = isInteractive(event.target);
+    cursor.classList.toggle('is-targeting', Boolean(pointer.target));
+  }, { passive: true });
+  document.addEventListener('pointerout', (event) => {
+    if (pointer.target && !event.relatedTarget?.closest?.('.target-cursor')) {
+      pointer.target = null;
+      cursor.classList.remove('is-targeting');
+    }
+  }, { passive: true });
+  const frame = () => {
+    if (pointer.target?.isConnected) {
+      const rect = pointer.target.getBoundingClientRect();
+      pointer.tx = rect.left + rect.width / 2;
+      pointer.ty = rect.top + rect.height / 2;
+      cursor.style.setProperty('--target-w', `${rect.width + 16}px`);
+      cursor.style.setProperty('--target-h', `${rect.height + 12}px`);
+    }
+    pointer.x += (pointer.tx - pointer.x) * .18;
+    pointer.y += (pointer.ty - pointer.y) * .18;
+    cursor.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0)`;
+    requestAnimationFrame(frame);
+  };
+  frame();
+}
+
 function drawHero(canvasSelector = '#heroCanvas', hostSelector = '.hero') {
   const canvas = $(canvasSelector);
   const hero = document.querySelector(hostSelector);
@@ -553,4 +589,5 @@ if (typeof document !== 'undefined') {
   bindEvents();
   bindScrollReveal();
   drawBallPit();
+  initTargetCursor();
 }

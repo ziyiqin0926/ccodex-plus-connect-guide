@@ -888,6 +888,18 @@ input[type="search"] { background: #1f2937; border-color: #475569; color: var(--
 .github-promo p:not(.eyebrow) { max-width: 680px; margin-bottom: 0; }
 .github-promo .link-button { flex: 0 0 auto; }
 .creator-note { margin: 18px 0 0; max-width: 560px; color: rgba(196,181,253,.9); font-size: 14px; line-height: 1.7; }
+.has-target-cursor, .has-target-cursor a, .has-target-cursor button { cursor: none; }
+.target-cursor { position: fixed; z-index: 100; top: 0; left: 0; width: 18px; height: 18px; pointer-events: none; border: 1px solid rgba(165,180,252,.92); border-radius: 50%; opacity: .86; mix-blend-mode: screen; transition: width .22s ease, height .22s ease, border-color .22s ease, opacity .22s ease; }
+.target-cursor::after { content: ''; position: absolute; inset: 6px; border-radius: 50%; background: #a5b4fc; box-shadow: 0 0 16px rgba(129,140,248,.9); }
+.target-cursor span, .target-cursor i, .target-cursor b, .target-cursor em { position: absolute; width: 7px; height: 7px; border-color: #c4b5fd; opacity: 0; transition: opacity .2s ease, transform .2s ease; }
+.target-cursor span { top: -5px; left: -5px; border-top: 1px solid; border-left: 1px solid; }
+.target-cursor i { top: -5px; right: -5px; border-top: 1px solid; border-right: 1px solid; }
+.target-cursor b { right: -5px; bottom: -5px; border-right: 1px solid; border-bottom: 1px solid; }
+.target-cursor em { left: -5px; bottom: -5px; border-left: 1px solid; border-bottom: 1px solid; }
+.target-cursor.is-targeting { width: var(--target-w, 120px); height: var(--target-h, 52px); border-radius: 12px; border-color: rgba(129,140,248,.78); opacity: .65; }
+.target-cursor.is-targeting::after { inset: 50%; width: 4px; height: 4px; transform: translate(-50%, -50%); }
+.target-cursor.is-targeting span, .target-cursor.is-targeting i, .target-cursor.is-targeting b, .target-cursor.is-targeting em { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .target-cursor { transition: none; } }
 @media (max-width: 760px) { .github-promo { display: grid; } }
 
 /* final layout balance */
