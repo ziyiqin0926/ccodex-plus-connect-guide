@@ -127,7 +127,7 @@ function renderDownloads() {
   return `
     <div class="inline-downloads">
       ${downloadPackages.map((item) => `
-    <article class="download-card ${item.verified ? 'is-verified' : 'is-pending'}">
+    <article class="download-card download-card--${item.id} ${item.verified ? 'is-verified' : 'is-pending'}">
       <div>
         <span>${item.badge}</span>
         <h3>${item.title}</h3>
@@ -141,6 +141,59 @@ function renderDownloads() {
       `).join('')}
     </div>
   `;
+}
+
+function renderToolkit() {
+  if (document.querySelector('.toolkit')) return;
+  const steps = $('#steps');
+  if (!steps) return;
+  const section = document.createElement('section');
+  section.className = 'toolkit';
+  section.setAttribute('aria-labelledby', 'toolkit-title');
+  section.innerHTML = `
+    <div class="section-title">
+      <p class="eyebrow">实用工具栏 · OPTIONAL TOOLS</p>
+      <h2 id="toolkit-title">需要时再打开这些工具</h2>
+      <p>工具不参与四步主流程，按需使用；下载前请确认来源、系统版本和隐私条款。</p>
+    </div>
+    <div class="toolkit-grid">
+      <article class="tool-card tool-card--qilin">
+        <span class="tool-badge">网络工具 · 文档入口</span>
+        <h3>火麒麟梯子</h3>
+        <p>原文档中的火麒麟入口。先打开文档，再进入其中的最新链接。</p>
+        <a class="tool-link" href="https://my.feishu.cn/wiki/Hdb2wR8t9iQ7ApketKQcu7oInZf?from=from_copylink" target="_blank" rel="noreferrer">打开文档入口 ↗</a>
+      </article>
+      <article class="tool-card tool-card--workbuddy">
+        <span class="tool-badge">AI 工作台 · 官方</span>
+        <h3>WorkBuddy</h3>
+        <p>WorkBuddy 官方下载与产品入口，按页面提示选择适合你的版本。</p>
+        <a class="tool-link" href="https://www.workbuddy.ai/" target="_blank" rel="noreferrer">打开官方下载 ↗</a>
+      </article>
+    </div>`;
+  steps.after(section);
+}
+
+function bindCommunityQr() {
+  const image = document.querySelector('.community-card .community-qr');
+  if (!image || image.closest('details')) return;
+  const reveal = document.createElement('details');
+  reveal.className = 'qr-reveal';
+  const summary = document.createElement('summary');
+  const thumb = image.cloneNode();
+  thumb.className = 'community-qr-thumb';
+  thumb.alt = '加入 Codex 部署交流群二维码缩略图';
+  const label = document.createElement('span');
+  label.textContent = '点击展开二维码';
+  summary.append(thumb, label);
+  const expanded = document.createElement('div');
+  expanded.className = 'qr-expanded';
+  const large = image.cloneNode();
+  large.alt = '加入 Codex 部署交流群二维码';
+  const note = document.createElement('small');
+  note.textContent = '用 QQ 扫码加入交流群';
+  expanded.append(large, note);
+  reveal.append(summary, expanded);
+  image.replaceWith(reveal);
 }
 
 function renderRelayLinks() {
@@ -190,6 +243,7 @@ function renderFaqs(results = faqs.slice(0, 3)) {
 
 function bindEvents() {
   bindLyrics();
+  bindCommunityQr();
   const music = $('#backgroundMusic');
   const musicToggle = $('#musicToggle');
   let musicStarted = false;
@@ -582,6 +636,7 @@ if (typeof document !== 'undefined') {
   document.querySelector('.hero-copy')?.append(creatorNote);
   renderSteps();
   $('#steps')?.after($('#progressPanel'));
+  renderToolkit();
   renderFaqs();
   renderProgress();
   bindEvents();
