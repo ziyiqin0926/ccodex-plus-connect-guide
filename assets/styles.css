@@ -664,13 +664,12 @@ main > *:not(#mainCanvas) { position: relative; z-index: 1; }
 .community-card h3 { margin: 8px 0; }
 .group-number { color: var(--gold); font: 700 14px/1.4 "Cascadia Code", Consolas, monospace; }
 .community-qr { width: min(100%, 260px); align-self: center; border-radius: 6px; background: #fff; }
+.community-card > .community-qr { display: none; }
 .qr-reveal { align-self: center; width: min(100%, 260px); }
-.qr-reveal summary { position: relative; display: grid; gap: 10px; justify-items: center; cursor: pointer; list-style: none; color: var(--blue); font-size: 13px; }
+.qr-reveal summary { display: inline-flex; align-items: center; cursor: pointer; list-style: none; color: var(--blue); font-size: 13px; }
 .qr-reveal summary::-webkit-details-marker { display: none; }
-.qr-reveal summary::before { content: '+'; position: absolute; margin: 4px 0 0 214px; color: var(--violet); font-size: 20px; line-height: 1; }
-.community-qr-thumb { width: 88px; height: 88px; object-fit: cover; border: 1px solid rgba(129,140,248,.45); border-radius: 10px; background: #fff; opacity: .88; transition: opacity .24s ease, transform .24s ease; }
-.qr-reveal summary:hover .community-qr-thumb { opacity: 1; transform: translateY(-2px); }
-.qr-reveal[open] summary::before { content: '−'; }
+.qr-reveal summary::after { content: ' ↗'; color: var(--violet); }
+.qr-reveal summary:hover { color: var(--text); }
 .qr-expanded { display: grid; gap: 8px; justify-items: center; margin-top: 12px; animation: qr-reveal-in .24s ease both; }
 .community-qr { box-shadow: 0 12px 30px rgba(2,6,23,.28); }
 .qr-expanded small { color: var(--muted); font-size: 12px; }

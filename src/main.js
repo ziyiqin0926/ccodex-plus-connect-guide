@@ -192,12 +192,9 @@ function bindCommunityQr() {
   const reveal = document.createElement('details');
   reveal.className = 'qr-reveal';
   const summary = document.createElement('summary');
-  const thumb = image.cloneNode();
-  thumb.className = 'community-qr-thumb';
-  thumb.alt = '加入 Codex 部署交流群二维码缩略图';
   const label = document.createElement('span');
-  label.textContent = '点击展开二维码';
-  summary.append(thumb, label);
+  label.textContent = '查看入群二维码';
+  summary.append(label);
   const expanded = document.createElement('div');
   expanded.className = 'qr-expanded';
   const large = image.cloneNode();
