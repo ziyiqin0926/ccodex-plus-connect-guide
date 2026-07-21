@@ -486,26 +486,6 @@ function drawBallPit() {
   frame();
 }
 
-function initBlobCursor() {
-  if (window.matchMedia?.('(pointer: coarse)').matches) return;
-  const cursor = document.createElement('div');
-  cursor.className = 'blob-cursor';
-  cursor.innerHTML = '<span></span><i></i><b></b>';
-  document.body.append(cursor);
-  document.body.classList.add('has-blob-cursor');
-  const pointer = { x: -120, y: -120, tx: -120, ty: -120 };
-  document.addEventListener('pointermove', (event) => { pointer.tx = event.clientX; pointer.ty = event.clientY; }, { passive: true });
-  const frame = () => {
-    pointer.x += (pointer.tx - pointer.x) * .2;
-    pointer.y += (pointer.ty - pointer.y) * .2;
-    cursor.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0)`;
-    cursor.style.setProperty('--blob-x', `${(pointer.tx - pointer.x) * .16}px`);
-    cursor.style.setProperty('--blob-y', `${(pointer.ty - pointer.y) * .16}px`);
-    requestAnimationFrame(frame);
-  };
-  frame();
-}
-
 function drawHero(canvasSelector = '#heroCanvas', hostSelector = '.hero') {
   const canvas = $(canvasSelector);
   const hero = document.querySelector(hostSelector);
@@ -607,5 +587,4 @@ if (typeof document !== 'undefined') {
   bindEvents();
   bindScrollReveal();
   drawBallPit();
-  initBlobCursor();
 }

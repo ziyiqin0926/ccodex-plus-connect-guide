@@ -888,13 +888,6 @@ input[type="search"] { background: #1f2937; border-color: #475569; color: var(--
 .github-promo p:not(.eyebrow) { max-width: 680px; margin-bottom: 0; }
 .github-promo .link-button { flex: 0 0 auto; }
 .creator-note { margin: 18px 0 0; max-width: 560px; color: rgba(196,181,253,.9); font-size: 14px; line-height: 1.7; }
-.has-blob-cursor, .has-blob-cursor a, .has-blob-cursor button { cursor: none; }
-.blob-cursor { position: fixed; z-index: 100; top: -18px; left: -18px; width: 36px; height: 36px; pointer-events: none; mix-blend-mode: screen; filter: blur(.25px); }
-.blob-cursor span, .blob-cursor i, .blob-cursor b { position: absolute; display: block; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #ffffffdd 0 8%, #a5b4fc 24%, #6366f1 72%, #4c1d95 100%); box-shadow: 0 0 24px rgba(129,140,248,.6); }
-.blob-cursor span { width: 28px; height: 28px; left: 4px; top: 4px; }
-.blob-cursor i { width: 18px; height: 18px; left: -8px; top: 14px; background: radial-gradient(circle at 35% 25%, #ffffffcc 0 8%, #c4b5fd 28%, #8b5cf6 80%); transform: translate(var(--blob-x, 0), var(--blob-y, 0)); opacity: .78; transition: transform .12s ease; }
-.blob-cursor b { width: 13px; height: 13px; left: 27px; top: -4px; background: radial-gradient(circle at 35% 25%, #ffffffcc 0 8%, #a7f3d0 30%, #10b981 82%); transform: translate(calc(var(--blob-x, 0) * -.65), calc(var(--blob-y, 0) * -.65)); opacity: .7; transition: transform .16s ease; }
-@media (prefers-reduced-motion: reduce) { .blob-cursor i, .blob-cursor b { transition: none; } }
 @media (max-width: 760px) { .github-promo { display: grid; } }
 
 /* final layout balance */
