@@ -934,15 +934,22 @@ input[type="search"] { background: #1f2937; border-color: #475569; color: var(--
 .tool-card { min-height: 180px; display: flex; flex-direction: column; gap: 12px; padding: 22px; border: 1px solid rgba(129,140,248,.28); border-radius: 12px; background: rgba(15,23,42,.28); }
 .tool-card--qilin { border-color: rgba(52,211,153,.38); }
 .tool-card--workbuddy { border-color: rgba(167,139,250,.42); }
+.tool-card--dabowan { border-color: rgba(129,140,248,.44); }
 .tool-badge { color: var(--blue); font-size: 12px; letter-spacing: .08em; }
 .tool-card--qilin .tool-badge { color: #6ee7b7; }
 .tool-card--workbuddy .tool-badge { color: #c4b5fd; }
+.tool-card--dabowan .tool-badge { color: #a5b4fc; }
 .tool-card h3 { margin: 0; }
 .tool-card p { margin: 0; color: var(--muted); }
 .tool-link { width: fit-content; margin-top: auto; color: var(--blue); text-decoration: none; }
 .tool-card--qilin .tool-link { color: #6ee7b7; }
 .tool-card--workbuddy .tool-link { color: #c4b5fd; }
+.tool-card--dabowan .tool-link { color: #a5b4fc; }
 .tool-link:hover { color: var(--text); }
+.tool-disclosure { margin-top: 18px; padding: 18px 20px; border: 1px solid rgba(245,158,11,.34); border-radius: 10px; background: rgba(245,158,11,.045); color: var(--muted); font-size: 13px; line-height: 1.75; }
+.tool-disclosure strong { color: #fbbf24; }
+.tool-disclosure p { margin: 6px 0 0; }
+.tool-disclosure .tool-mantra { color: #c4b5fd; }
 @media (max-width: 760px) {
   .lyric-panel { top: 45%; right: 18px; width: calc(100% - 36px); min-width: 0; transform: none; }
   .toolkit-grid { grid-template-columns: 1fr; }

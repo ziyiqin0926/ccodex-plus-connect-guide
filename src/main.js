@@ -158,10 +158,16 @@ function renderToolkit() {
     </div>
     <div class="toolkit-grid">
       <article class="tool-card tool-card--qilin">
-        <span class="tool-badge">网络工具 · 文档入口</span>
+        <span class="tool-badge">网络工具 · 第三方推荐</span>
         <h3>火麒麟梯子</h3>
-        <p>原文档中的火麒麟入口。先打开文档，再进入其中的最新链接。</p>
-        <a class="tool-link" href="https://my.feishu.cn/wiki/Hdb2wR8t9iQ7ApketKQcu7oInZf?from=from_copylink" target="_blank" rel="noreferrer">打开文档入口 ↗</a>
+        <p>支持同账号 Windows、Mac、Android 共享；页面当前标注约 19 元/月，价格与服务以官方页面为准。</p>
+        <a class="tool-link" href="https://www.okyrin.top/#/register?code=iZO9SN00" target="_blank" rel="noreferrer">打开火麒麟入口 ↗</a>
+      </article>
+      <article class="tool-card tool-card--dabowan">
+        <span class="tool-badge">中转站 · 实测参考</span>
+        <h3>实时中转站靠谱度实测</h3>
+        <p>用于比对稳定性、纯净性和实际表现；掺水、虚标建议自己实测后判断。</p>
+        <a class="tool-link" href="https://dabowan.com/" target="_blank" rel="noreferrer">打开智能工具箱实测 ↗</a>
       </article>
       <article class="tool-card tool-card--workbuddy">
         <span class="tool-badge">AI 工作台 · 官方</span>
@@ -169,7 +175,14 @@ function renderToolkit() {
         <p>WorkBuddy 官方下载与产品入口，按页面提示选择适合你的版本。</p>
         <a class="tool-link" href="https://www.workbuddy.ai/" target="_blank" rel="noreferrer">打开官方下载 ↗</a>
       </article>
-    </div>`;
+    </div>
+    <aside class="tool-disclosure">
+      <strong>公开声明</strong>
+      <p>本站仅做 AI 科技知识分享、软件测评与工具推荐，不售卖软件，也不对任何第三方服务作担保。</p>
+      <p>请大家自重，不要使用推荐链接从事违反社会公序良俗、危害社会稳定或违反治安管理的行为。</p>
+      <p>再次叠甲：使用这些链接的个人行为，与主播及共同阅读文档的各位科技好友无关。</p>
+      <p class="tool-mantra">请与我在此默念三遍：中国万岁！中国共产党万岁！为了社会共产主义事业奋斗终身！</p>
+    </aside>`;
   steps.after(section);
 }
 
