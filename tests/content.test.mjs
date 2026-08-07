@@ -76,6 +76,8 @@ test('截图区替换为教学视频和交流群二维码', () => {
   assert.match(communityGroup.qrImage, /assets\/community-qr\.jpg$/);
   assert.match(html, /training-video/);
   assert.match(html, /community-qr/);
+  assert.match(html, /community-card--hub/);
+  assert.doesNotMatch(html, /feedback-card/);
   assert.doesNotMatch(html, /id="shot"/);
   assert.doesNotMatch(html, /提示词武器库/);
   assert.doesNotMatch(html, /免费发布/);
