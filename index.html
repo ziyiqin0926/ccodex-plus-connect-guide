@@ -9,26 +9,35 @@
         document.documentElement.dataset.theme = localStorage.getItem('codex-plus-guide-theme') === 'light' ? 'light' : 'dark';
       } catch {}
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20260807-cleanup-v1">
+    <link rel="stylesheet" href="assets/styles.css?v=20260807-guided-nav-v1">
   </head>
   <body>
-    <header class="hero">
+    <header id="top" class="hero">
       <canvas id="heroCanvas" aria-hidden="true"></canvas>
-      <nav>
-        <strong>CODEX++</strong>
-        <button id="themeToggle" class="theme-toggle" type="button" aria-label="切换到亮色模式" aria-pressed="false">
-          <span class="theme-toggle-icon" aria-hidden="true">☼</span>
-          <span class="theme-toggle-label">亮色</span>
-        </button>
-        <a href="#steps">四步教程</a>
-        <a href="#rescue">视频 & 群聊</a>
+      <nav aria-label="主导航">
+        <strong><a href="#top">CODEX++</a></strong>
+        <div class="nav-links">
+          <a href="#top">首页</a>
+          <a href="#steps" data-start-tutorial>四步教程</a>
+          <a href="#rescue">视频教学</a>
+          <a href="#community">交流群</a>
+          <a href="#toolkit">工具栏</a>
+          <a href="#case-studies">实操案例</a>
+          <a href="#github">GitHub</a>
+        </div>
+        <div class="nav-tools">
+          <button id="themeToggle" class="theme-toggle" type="button" aria-label="切换到亮色模式" aria-pressed="false">
+            <span class="theme-toggle-icon" aria-hidden="true">☼</span>
+            <span class="theme-toggle-label">亮色</span>
+          </button>
+        </div>
       </nav>
       <section class="hero-copy">
         <p class="eyebrow">CODEX 接入作战台 · 默认助手 codeX ++</p>
         <h1>4 步，把你的电脑接入 Codex GPT 部署。</h1>
         <p>下载安装到配置 CODEX++，再连上运行 GPT Agent 的部署电脑。先看教学视频，卡住就进群提问。</p>
         <div class="hero-actions">
-          <a class="primary link-button" href="#steps">开始第一步</a>
+          <a class="primary link-button" href="#steps" data-start-tutorial>开始第一步</a>
           <a class="ghost link-button" href="#community">我已经卡住了</a>
         </div>
       </section>
@@ -51,7 +60,7 @@
       
       <section id="steps" class="steps" aria-label="四步教程"></section>
 
-      <section class="github-promo" aria-label="GitHub 项目">
+      <section id="github" class="github-promo" aria-label="GitHub 项目">
         <div>
           <p class="eyebrow">OPEN SOURCE · C4X</p>
           <h2>Codex 四步接入</h2>
@@ -118,7 +127,7 @@
         </div>
       </section>
 
-      <section class="case-studies" aria-labelledby="case-studies-title">
+      <section id="case-studies" class="case-studies" aria-labelledby="case-studies-title">
         <div class="section-title">
           <p class="eyebrow">实操案例 · CASE STUDIES</p>
           <h2 id="case-studies-title">实操案例示范</h2>
@@ -149,6 +158,6 @@
       <span><small>背景音乐</small><strong>Mixkit · Deep Urban</strong></span>
       <span class="music-play" aria-hidden="true">▶</span>
     </button>
-    <script type="module" src="src/main.js?v=20260807-cleanup-v1"></script>
+    <script type="module" src="src/main.js?v=20260807-guided-nav-v1"></script>
   </body>
 </html>

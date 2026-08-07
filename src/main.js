@@ -6,6 +6,7 @@ import {
   localOptimizationSkills,
 } from './content.js';
 const $ = (selector) => document.querySelector(selector);
+let activeStepIndex = 0;
 
 const lyricLines = [
   '关于全文我有话要说，AI 是工具，AI 是工具，AI 是工具。',
@@ -96,7 +97,40 @@ function renderStepReferences(index) {
 }
 
 function renderSteps() {
-  $('#steps').innerHTML = guideSteps.map((step, index) => buildStepHtml(step, index)).join('');
+  const steps = $('#steps');
+  if (!steps) return;
+  const current = guideSteps[activeStepIndex];
+  const next = guideSteps[activeStepIndex + 1];
+  steps.innerHTML = `
+    <div class="tutorial-shell">
+      <div class="tutorial-heading">
+        <div>
+          <p class="eyebrow">GUIDED SETUP · 逐级进入</p>
+          <h2>跟着当前这一步完成，再进入下一步。</h2>
+        </div>
+        <span class="tutorial-count">${String(activeStepIndex + 1).padStart(2, '0')} / ${guideSteps.length}</span>
+      </div>
+      <div class="tutorial-stepper" role="tablist" aria-label="教程步骤">
+        ${guideSteps.map((step, index) => `
+          <button class="tutorial-tab ${index === activeStepIndex ? 'is-active' : ''}" type="button" role="tab" aria-selected="${index === activeStepIndex}" data-step-index="${index}">
+            <span>${String(index + 1).padStart(2, '0')}</span><strong>${step.title}</strong>
+          </button>
+        `).join('')}
+      </div>
+      <div class="tutorial-stage">${buildStepHtml(current, activeStepIndex)}</div>
+      <div class="tutorial-controls">
+        <button class="ghost tutorial-prev" type="button" data-step-prev ${activeStepIndex === 0 ? 'disabled' : ''}>上一步</button>
+        ${next
+          ? `<button class="primary tutorial-next" type="button" data-step-next>下一步：${next.title}</button>`
+          : '<a class="primary link-button tutorial-next" href="#rescue">完成配置，去看视频 ↗</a>'}
+      </div>
+    </div>`;
+}
+
+function setActiveStep(index, { scroll = false } = {}) {
+  activeStepIndex = Math.max(0, Math.min(index, guideSteps.length - 1));
+  renderSteps();
+  if (scroll) $('#steps')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderDownloads() {
@@ -125,6 +159,7 @@ function renderToolkit() {
   if (!steps) return;
   const section = document.createElement('section');
   section.className = 'toolkit';
+  section.id = 'toolkit';
   section.setAttribute('aria-labelledby', 'toolkit-title');
   section.innerHTML = `
     <div class="section-title">
@@ -268,6 +303,19 @@ function bindEvents() {
     }
   });
   $('#steps').addEventListener('click', (event) => {
+    const tab = event.target.closest('[data-step-index]');
+    if (tab) {
+      setActiveStep(Number(tab.dataset.stepIndex));
+      return;
+    }
+    if (event.target.closest('[data-step-prev]')) {
+      setActiveStep(activeStepIndex - 1);
+      return;
+    }
+    if (event.target.closest('[data-step-next]')) {
+      setActiveStep(activeStepIndex + 1, { scroll: true });
+      return;
+    }
     const copyButton = event.target.closest('[data-copy]');
     if (copyButton) {
       const item = localOptimizationSkills[Number(copyButton.dataset.copy)];
@@ -278,6 +326,13 @@ function bindEvents() {
       });
       return;
     }
+  });
+
+  document.addEventListener('click', (event) => {
+    const start = event.target.closest('[data-start-tutorial]');
+    if (!start) return;
+    activeStepIndex = 0;
+    renderSteps();
   });
 }
 

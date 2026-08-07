@@ -82,3 +82,12 @@ test('截图区替换为教学视频和交流群二维码', () => {
   assert.doesNotMatch(html, /发布到 GitHub Pages/);
   assert.doesNotMatch(html, /faq-search|常见问题答疑|class="helper"|一键检查助手/);
 });
+
+test('导航按教程与辅助内容分类，教程采用逐级进入', () => {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  assert.match(html, /class="nav-links"/);
+  for (const target of ['#top', '#steps', '#rescue', '#community', '#toolkit', '#case-studies', '#github']) {
+    assert.match(html, new RegExp(`href="${target}"`));
+  }
+  assert.match(html, /data-start-tutorial/);
+});
