@@ -9,7 +9,7 @@
         document.documentElement.dataset.theme = localStorage.getItem('codex-plus-guide-theme') === 'light' ? 'light' : 'dark';
       } catch {}
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20260807-theme-v1">
+    <link rel="stylesheet" href="assets/styles.css?v=20260807-cleanup-v1">
   </head>
   <body>
     <header class="hero">
@@ -26,7 +26,7 @@
       <section class="hero-copy">
         <p class="eyebrow">CODEX 接入作战台 · 默认助手 codeX ++</p>
         <h1>4 步，把你的电脑接入 Codex GPT 部署。</h1>
-        <p>下载安装到配置 CODEX++，再连上运行 GPT Agent 的部署电脑。先看教学视频，卡住就查 FAQ 或进群提问。</p>
+        <p>下载安装到配置 CODEX++，再连上运行 GPT Agent 的部署电脑。先看教学视频，卡住就进群提问。</p>
         <div class="hero-actions">
           <a class="primary link-button" href="#steps">开始第一步</a>
           <a class="ghost link-button" href="#community">我已经卡住了</a>
@@ -49,14 +49,6 @@
 
     <main>
       
-      <section class="progress-panel" id="progressPanel">
-        <div>
-          <span id="progressText">0/4 已完成</span>
-          <div class="bar"><i id="progressBar"></i></div>
-        </div>
-        <p><span class="live-dot"></span>本地教程已加载 · 按步骤完成即可</p>
-      </section>
-
       <section id="steps" class="steps" aria-label="四步教程"></section>
 
       <section class="github-promo" aria-label="GitHub 项目">
@@ -72,7 +64,7 @@
         <div class="section-title">
           <p class="eyebrow">视频教学 · 交流群</p>
           <h2>先看一遍，再带着问题来问。</h2>
-          <p>截图识别先下线，避免给你“看起来很智能、实际解决不了”的假帮助。先看视频，遇到具体问题再查 FAQ 或进群。</p>
+          <p>截图识别先下线，避免给你“看起来很智能、实际解决不了”的假帮助。先看视频，遇到具体问题直接进群。</p>
         </div>
         <div class="rescue-grid">
           <article class="training-video">
@@ -110,16 +102,11 @@
             </div>
             <img class="community-qr" src="assets/community-qr.jpg" alt="加入 Codex 部署交流群二维码">
           </aside>
-          <div class="faq-search">
-            <label class="search-label" for="search">常见问题答疑</label>
-            <input id="search" type="search" placeholder="输入：下载失败、安装权限、连接失败、没有日志、模型不显示">
-            <div id="faqResults" class="faq-results"></div>
-          </div>
           <aside class="feedback-card" id="feedback">
             <div>
-              <span class="eyebrow">问题反馈 · FAQ 收录</span>
-              <h3>QQ群问题反馈与收录</h3>
-              <p>遇到页面没有覆盖的新问题，进群反馈；确认可复现后，我会把高频问题整理回网站常见问题答疑。</p>
+              <span class="eyebrow">问题反馈 · 持续更新</span>
+              <h3>QQ群问题反馈</h3>
+              <p>遇到页面没有覆盖的新问题，进群反馈；确认可复现后，我会把高频问题整理回教程。</p>
               <p class="feedback-format"><strong>反馈格式：</strong>系统版本 · 当前步骤 · 报错原文 · 官方 API 或中转站 · 截图（Key 请打码）</p>
               <p class="group-number">QQ群：942308330</p>
             </div>
@@ -154,16 +141,6 @@
         <a class="case-cta" href="#community">进群提交案例愿望与需求 ↗</a>
       </section>
 
-      <section class="helper">
-        <div>
-          <p class="eyebrow">按需启用</p>
-          <h2>一键检查助手只查你的电脑。</h2>
-          <p>页面默认不会请求 localhost。只有点击按钮后，才检查 <code>127.0.0.1:7331</code>。</p>
-        </div>
-        <button id="helperBtn" class="primary">启用一键检查</button>
-        <p id="helperStatus" class="muted">未启用。</p>
-      </section>
-
     </main>
 
     <audio id="backgroundMusic" src="assets/mixkit-owies-ukulele-1072.mp3" loop preload="auto" muted></audio>
@@ -172,6 +149,6 @@
       <span><small>背景音乐</small><strong>Mixkit · Deep Urban</strong></span>
       <span class="music-play" aria-hidden="true">▶</span>
     </button>
-    <script type="module" src="src/main.js?v=20260807-theme-v1"></script>
+    <script type="module" src="src/main.js?v=20260807-cleanup-v1"></script>
   </body>
 </html>

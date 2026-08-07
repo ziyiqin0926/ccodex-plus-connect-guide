@@ -1,19 +1,10 @@
 import {
   guideSteps,
-  faqs,
-  localHelper,
   downloadPackages,
   relayLinks,
   referenceLinks,
   localOptimizationSkills,
 } from './content.js';
-import { findFaqs, checkLocalHelper } from './diagnostics.js';
-
-const progressKey = 'codex-plus-guide-progress';
-const progress = new Set(
-  typeof localStorage === 'undefined' ? [] : JSON.parse(localStorage.getItem(progressKey) || '[]'),
-);
-
 const $ = (selector) => document.querySelector(selector);
 
 const lyricLines = [
@@ -30,20 +21,9 @@ const lyricLines = [
   '如果文档里的视频帮助到你，请给原博主点关注、收藏。',
 ];
 
-function saveProgress() {
-  localStorage.setItem(progressKey, JSON.stringify([...progress]));
-  renderProgress();
-}
-
-function renderProgress() {
-  const done = progress.size;
-  $('#progressText').textContent = `${done}/4 已完成`;
-  $('#progressBar').style.width = `${(done / guideSteps.length) * 100}%`;
-}
-
-export function buildStepHtml(step, index, completed = new Set()) {
+export function buildStepHtml(step, index) {
   return `
-    <article class="step ${completed.has(step.id) ? 'is-done' : ''}" id="${step.id}">
+    <article class="step" id="${step.id}">
       <div class="step-index">${String(index + 1).padStart(2, '0')}</div>
       <div>
         <h3>${step.title}</h3>
@@ -55,10 +35,6 @@ export function buildStepHtml(step, index, completed = new Set()) {
         ${index === 1 ? renderRelayLinks() : ''}
         ${index === 3 ? renderLocalOptimization() : ''}
         ${renderStepReferences(index)}
-        <div class="step-actions">
-          <button class="primary" data-done="${step.id}">标记完成</button>
-          <button class="ghost" data-help="${step.helpKey}">我卡在这里</button>
-        </div>
       </div>
     </article>
   `;
@@ -120,7 +96,7 @@ function renderStepReferences(index) {
 }
 
 function renderSteps() {
-  $('#steps').innerHTML = guideSteps.map((step, index) => buildStepHtml(step, index, progress)).join('');
+  $('#steps').innerHTML = guideSteps.map((step, index) => buildStepHtml(step, index)).join('');
 }
 
 function renderDownloads() {
@@ -226,7 +202,7 @@ function renderRelayLinks() {
 }
 
 function bindScrollReveal() {
-  const targets = document.querySelectorAll('.step, .rescue, .case-studies, .helper');
+  const targets = document.querySelectorAll('.step, .rescue, .case-studies');
   if (!('IntersectionObserver' in window)) return;
   targets.forEach((target) => target.classList.add('reveal-target'));
   const observer = new IntersectionObserver((entries, instance) => {
@@ -237,18 +213,6 @@ function bindScrollReveal() {
     });
   }, { threshold: 0.12 });
   targets.forEach((target) => observer.observe(target));
-}
-
-function renderFaqs(results = faqs.slice(0, 3)) {
-  $('#faqResults').innerHTML = results.length
-    ? results.map((faq) => `
-      <article class="faq">
-        <span>${guideSteps.find((step) => step.id === faq.step)?.title || '诊断'}</span>
-        <h3>${faq.title}</h3>
-        <p>${faq.resolution}</p>
-      </article>
-    `).join('')
-    : '<p class="muted">没匹配到。换成“下载失败 / 安装权限 / 连接失败 / 没日志”这类词试试。</p>';
 }
 
 function initThemeToggle() {
@@ -313,33 +277,6 @@ function bindEvents() {
         setTimeout(() => { copyButton.textContent = label; }, 1200);
       });
       return;
-    }
-    const doneId = event.target.dataset.done;
-    const helpKey = event.target.dataset.help;
-    if (doneId) {
-      progress.add(doneId);
-      saveProgress();
-      renderSteps();
-    }
-    if (helpKey) {
-      $('#search').value = helpKey;
-      renderFaqs(findFaqs(helpKey, faqs));
-      $('#rescue').scrollIntoView({ behavior: 'smooth' });
-    }
-  });
-
-  $('#search').addEventListener('input', (event) => {
-    renderFaqs(findFaqs(event.target.value, faqs));
-  });
-
-  $('#helperBtn').addEventListener('click', async () => {
-    const status = $('#helperStatus');
-    status.textContent = '正在检查本机助手...';
-    try {
-      const data = await checkLocalHelper();
-      status.textContent = data.ok ? '本机助手在线，可以继续做截图识别。' : '本机助手返回异常，继续查 FAQ。';
-    } catch {
-      status.innerHTML = `没检测到本机助手。继续查 FAQ，或等真实资料导入后下载检查助手：<a href="${localHelper.downloadUrl}">下载入口</a>`;
     }
   });
 }
@@ -665,10 +602,7 @@ if (typeof document !== 'undefined') {
   creatorNote.textContent = '当然了，你现在看到的这个网站也是 Codex 纯一体生成的，没写一行代码，我相信你也可以。';
   document.querySelector('.hero-copy')?.append(creatorNote);
   renderSteps();
-  $('#steps')?.after($('#progressPanel'));
   renderToolkit();
-  renderFaqs();
-  renderProgress();
   bindEvents();
   bindScrollReveal();
   drawBallPit();

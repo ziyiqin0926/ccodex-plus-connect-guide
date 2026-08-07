@@ -36,10 +36,11 @@ test('第一步下载区包含用户提供的 Codex 和 Codex++ 链接', () => {
   }
 });
 
-test('第一步交互按钮应在下载链接之后', async () => {
+test('第一步保留下载入口，不再显示完成标记', async () => {
   const { buildStepHtml } = await import('../src/main.js');
   const html = buildStepHtml(guideSteps[0], 0, new Set());
-  assert.ok(html.indexOf('inline-downloads') < html.indexOf('data-done'));
+  assert.match(html, /inline-downloads/);
+  assert.doesNotMatch(html, /data-done|标记完成|我卡在这里/);
 });
 
 test('第二步包含中转站注册与令牌入口', async () => {
@@ -47,7 +48,7 @@ test('第二步包含中转站注册与令牌入口', async () => {
   const html = buildStepHtml(guideSteps[1], 1, new Set());
   assert.equal(relayLinks[0].url, 'https://ergouzi.life/sign-up?aff=nkEx');
   assert.match(html, /relay-links/);
-  assert.ok(html.indexOf('relay-links') < html.indexOf('data-done'));
+  assert.doesNotMatch(html, /data-done/);
 });
 
 test('文档要点已进入四步内容和配置示例', async () => {
@@ -79,5 +80,5 @@ test('截图区替换为教学视频和交流群二维码', () => {
   assert.doesNotMatch(html, /提示词武器库/);
   assert.doesNotMatch(html, /免费发布/);
   assert.doesNotMatch(html, /发布到 GitHub Pages/);
-  assert.match(html, /常见问题答疑/);
+  assert.doesNotMatch(html, /faq-search|常见问题答疑|class="helper"|一键检查助手/);
 });
