@@ -251,7 +251,27 @@ function renderFaqs(results = faqs.slice(0, 3)) {
     : '<p class="muted">没匹配到。换成“下载失败 / 安装权限 / 连接失败 / 没日志”这类词试试。</p>';
 }
 
+function initThemeToggle() {
+  const root = document.documentElement;
+  const toggle = $('#themeToggle');
+  if (!toggle) return;
+  const applyTheme = (theme) => {
+    const isLight = theme === 'light';
+    root.dataset.theme = isLight ? 'light' : 'dark';
+    try { localStorage.setItem('codex-plus-guide-theme', isLight ? 'light' : 'dark'); } catch {}
+    toggle.setAttribute('aria-pressed', String(isLight));
+    toggle.setAttribute('aria-label', isLight ? '切换到夜间模式' : '切换到亮色模式');
+    const icon = toggle.querySelector('.theme-toggle-icon');
+    const label = toggle.querySelector('.theme-toggle-label');
+    if (icon) icon.textContent = isLight ? '☾' : '☼';
+    if (label) label.textContent = isLight ? '夜间' : '亮色';
+  };
+  applyTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
+  toggle.addEventListener('click', () => applyTheme(root.dataset.theme === 'light' ? 'dark' : 'light'));
+}
+
 function bindEvents() {
+  initThemeToggle();
   bindLyrics();
   bindCommunityQr();
   const music = $('#backgroundMusic');
