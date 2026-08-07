@@ -1097,3 +1097,46 @@ html[data-theme="light"] .tutorial-tab.is-active { background: linear-gradient(1
   .tutorial-tab strong { font-size: 12px; }
 }
 
+/* Contrast, copy rhythm, and one focused community entry */
+h1, h2, h3, h4 { text-wrap: balance; }
+h1, h2, h3, h4, p, li { overflow-wrap: normal; word-break: normal; }
+p, li { text-wrap: pretty; }
+p { max-width: 68ch; }
+code, pre, .config-snippet { overflow-wrap: anywhere; word-break: break-word; }
+.hero-copy > p:not(.eyebrow) { max-width: 58ch; line-height: 1.8; }
+.section-title > p:not(.eyebrow), .step > div > p, .step-example p, .video-copy p, .tool-card p, .case-card p { max-width: 66ch; line-height: 1.82; }
+.step li { max-width: 72ch; line-height: 1.78; }
+.community-card--hub { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); align-items: center; gap: 28px; }
+.community-card--hub .feedback-format { margin-top: 12px; font-size: 13px; }
+.community-card--hub .qr-reveal { justify-self: center; }
+.group-number { display: inline-flex; align-items: center; padding: 8px 12px; border: 1px solid color-mix(in srgb, var(--gold) 42%, transparent); border-radius: 8px; background: color-mix(in srgb, var(--gold) 10%, transparent); }
+nav .nav-links a { color: color-mix(in srgb, var(--text) 72%, var(--muted)); }
+nav .nav-links a:hover, nav .nav-links a:focus-visible { color: var(--text); }
+.theme-toggle { color: var(--text); border-color: color-mix(in srgb, var(--violet) 60%, var(--line)); }
+.theme-toggle-label { color: var(--text); font-weight: 700; }
+html[data-theme="dark"] .lyric-track p { color: rgba(229,231,235,.48); }
+html[data-theme="dark"] .lyric-track p.is-active { color: #f1f5f9; }
+html[data-theme="dark"] .feedback-format strong { color: #fcd34d; }
+html[data-theme="light"] body { color: #1e293b; }
+html[data-theme="light"] p, html[data-theme="light"] li { color: #42536a; }
+html[data-theme="light"] nav .nav-links a { color: #334155; }
+html[data-theme="light"] nav .nav-links a:hover, html[data-theme="light"] nav .nav-links a:focus-visible { color: #3730a3; }
+html[data-theme="light"] .theme-toggle { color: #1e293b; border-color: rgba(79,70,229,.48); background: rgba(255,255,255,.92); }
+html[data-theme="light"] .theme-toggle-label { color: #312e81; }
+html[data-theme="light"] .lyric-head, html[data-theme="light"] .lyric-head button, html[data-theme="light"] .music-dock small, html[data-theme="light"] .music-play { color: #4338ca; }
+html[data-theme="light"] .lyric-track p { color: rgba(30,41,59,.5); }
+html[data-theme="light"] .lyric-track p.is-active { color: #1e293b; text-shadow: 0 0 14px rgba(79,70,229,.18); }
+html[data-theme="light"] .creator-note { color: #475569; }
+html[data-theme="light"] .group-number { color: #92400e; border-color: rgba(146,64,14,.28); background: rgba(245,158,11,.12); }
+html[data-theme="light"] .tool-card--qilin .tool-badge, html[data-theme="light"] .tool-card--qilin .tool-link { color: #047857; }
+html[data-theme="light"] .tool-card--workbuddy .tool-badge, html[data-theme="light"] .tool-card--workbuddy .tool-link { color: #6d28d9; }
+html[data-theme="light"] .tool-card--dabowan .tool-badge, html[data-theme="light"] .tool-card--dabowan .tool-link { color: #4338ca; }
+html[data-theme="light"] .tool-disclosure strong { color: #92400e; }
+html[data-theme="light"] .case-card small { color: #526277; }
+@media (max-width: 760px) {
+  .community-card--hub { grid-template-columns: 1fr; gap: 18px; }
+  .community-card--hub .qr-reveal { justify-self: start; }
+  .tutorial-controls { align-items: stretch; flex-direction: column-reverse; }
+  .tutorial-next { width: 100%; text-align: center; }
+}
+

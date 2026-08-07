@@ -9,7 +9,7 @@
         document.documentElement.dataset.theme = localStorage.getItem('codex-plus-guide-theme') === 'light' ? 'light' : 'dark';
       } catch {}
     </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20260807-guided-nav-v1">
+    <link rel="stylesheet" href="assets/styles.css?v=20260807-contrast-v1">
   </head>
   <body>
     <header id="top" class="hero">
@@ -102,27 +102,15 @@
               <a class="primary link-button" href="https://v.douyin.com/sPl8uhD826I/" target="_blank" rel="noreferrer">打开教学视频 ↗</a>
             </div>
           </article>
-          <aside class="community-card" id="community">
+          <aside class="community-card community-card--hub" id="community">
             <div>
-              <span class="eyebrow">需要具体帮助</span>
-              <h3>Codex 部署交流群</h3>
-              <p>扫码加入 QQ 群，交流安装、配置、中转和实际使用问题。</p>
+              <span class="eyebrow">需要具体帮助 · 问题反馈</span>
+              <h3>Codex 部署 QQ 交流群</h3>
+              <p>安装、配置、中转与实际使用问题都可以进群交流；可复现的高频问题会持续补充进教程。</p>
               <p class="group-number">QQ群：942308330</p>
+              <p class="feedback-format"><strong>反馈时请附：</strong>系统版本、当前步骤、报错原文、截图（Key 请打码）。</p>
             </div>
             <img class="community-qr" src="assets/community-qr.jpg" alt="加入 Codex 部署交流群二维码">
-          </aside>
-          <aside class="feedback-card" id="feedback">
-            <div>
-              <span class="eyebrow">问题反馈 · 持续更新</span>
-              <h3>QQ群问题反馈</h3>
-              <p>遇到页面没有覆盖的新问题，进群反馈；确认可复现后，我会把高频问题整理回教程。</p>
-              <p class="feedback-format"><strong>反馈格式：</strong>系统版本 · 当前步骤 · 报错原文 · 官方 API 或中转站 · 截图（Key 请打码）</p>
-              <p class="group-number">QQ群：942308330</p>
-            </div>
-            <div class="feedback-actions">
-              <a class="primary link-button" href="#community">查看入群二维码</a>
-              <span>问题解决后会同步更新答案。</span>
-            </div>
           </aside>
         </div>
       </section>
@@ -158,6 +146,6 @@
       <span><small>背景音乐</small><strong>Mixkit · Deep Urban</strong></span>
       <span class="music-play" aria-hidden="true">▶</span>
     </button>
-    <script type="module" src="src/main.js?v=20260807-guided-nav-v1"></script>
+    <script type="module" src="src/main.js?v=20260807-contrast-v1"></script>
   </body>
 </html>
