@@ -174,17 +174,17 @@ function renderToolkit() {
         <p>支持同账号 Windows、Mac、Android 共享；页面当前标注约 19 元/月，价格与服务以官方页面为准。</p>
         <a class="tool-link" href="https://www.okyrin.top/#/register?code=iZO9SN00" target="_blank" rel="noreferrer">打开火麒麟入口 ↗</a>
       </article>
-      <article class="tool-card tool-card--dabowan">
-        <span class="tool-badge">中转站 · 实测参考</span>
-        <h3>实时中转站靠谱度实测</h3>
-        <p>用于比对稳定性、纯净性和实际表现；掺水、虚标建议自己实测后判断。</p>
-        <a class="tool-link" href="https://dabowan.com/" target="_blank" rel="noreferrer">打开智能工具箱实测 ↗</a>
-      </article>
       <article class="tool-card tool-card--workbuddy">
         <span class="tool-badge">AI 工作台 · 官方</span>
         <h3>WorkBuddy</h3>
         <p>WorkBuddy 官方下载与产品入口，按页面提示选择适合你的版本。</p>
         <a class="tool-link" href="https://www.workbuddy.ai/" target="_blank" rel="noreferrer">打开官方下载 ↗</a>
+      </article>
+      <article class="tool-card tool-card--uninstall">
+        <span class="tool-badge">维护工具 · Windows</span>
+        <h3>Codex 卸载工具</h3>
+        <p>需要清理旧版本、重新安装或排查残留时使用。下载后解压，再按工具说明操作。</p>
+        <a class="tool-link" href="assets/codex-uninstall-tool.zip" download>下载卸载工具 ↗</a>
       </article>
     </div>
     <aside class="tool-disclosure">

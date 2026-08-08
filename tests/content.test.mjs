@@ -93,3 +93,12 @@ test('导航按教程与辅助内容分类，教程采用逐级进入', () => {
   }
   assert.match(html, /data-start-tutorial/);
 });
+
+test('工具栏提供卸载工具下载且移除中转站实测卡片', () => {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const source = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  assert.equal(fs.existsSync(new URL('../assets/codex-uninstall-tool.zip', import.meta.url)), true);
+  assert.match(source, /codex-uninstall-tool\.zip/);
+  assert.doesNotMatch(source, /tool-card--dabowan|实时中转站靠谱度实测/);
+  assert.doesNotMatch(html, /dabowan\.com/);
+});

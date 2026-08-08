@@ -934,16 +934,19 @@ input[type="search"] { background: #1f2937; border-color: #475569; color: var(--
 .tool-card--qilin { border-color: rgba(52,211,153,.38); }
 .tool-card--workbuddy { border-color: rgba(167,139,250,.42); }
 .tool-card--dabowan { border-color: rgba(129,140,248,.44); }
+.tool-card--uninstall { border-color: rgba(251,191,36,.42); }
 .tool-badge { color: var(--blue); font-size: 12px; letter-spacing: .08em; }
 .tool-card--qilin .tool-badge { color: #6ee7b7; }
 .tool-card--workbuddy .tool-badge { color: #c4b5fd; }
 .tool-card--dabowan .tool-badge { color: #a5b4fc; }
+.tool-card--uninstall .tool-badge { color: #fbbf24; }
 .tool-card h3 { margin: 0; }
 .tool-card p { margin: 0; color: var(--muted); }
 .tool-link { width: fit-content; margin-top: auto; color: var(--blue); text-decoration: none; }
 .tool-card--qilin .tool-link { color: #6ee7b7; }
 .tool-card--workbuddy .tool-link { color: #c4b5fd; }
 .tool-card--dabowan .tool-link { color: #a5b4fc; }
+.tool-card--uninstall .tool-link { color: #fbbf24; }
 .tool-link:hover { color: var(--text); }
 .tool-disclosure { margin-top: 18px; padding: 18px 20px; border: 1px solid rgba(245,158,11,.34); border-radius: 10px; background: rgba(245,158,11,.045); color: var(--muted); font-size: 13px; line-height: 1.75; }
 .tool-disclosure strong { color: #fbbf24; }
@@ -1131,6 +1134,7 @@ html[data-theme="light"] .group-number { color: #92400e; border-color: rgba(146,
 html[data-theme="light"] .tool-card--qilin .tool-badge, html[data-theme="light"] .tool-card--qilin .tool-link { color: #047857; }
 html[data-theme="light"] .tool-card--workbuddy .tool-badge, html[data-theme="light"] .tool-card--workbuddy .tool-link { color: #6d28d9; }
 html[data-theme="light"] .tool-card--dabowan .tool-badge, html[data-theme="light"] .tool-card--dabowan .tool-link { color: #4338ca; }
+html[data-theme="light"] .tool-card--uninstall .tool-badge, html[data-theme="light"] .tool-card--uninstall .tool-link { color: #a16207; }
 html[data-theme="light"] .tool-disclosure strong { color: #92400e; }
 html[data-theme="light"] .case-card small { color: #526277; }
 @media (max-width: 760px) {
