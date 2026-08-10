@@ -347,24 +347,41 @@ function bindLyrics() {
   let dragging = false;
   let dragX = 0;
   let dragY = 0;
-  panel.addEventListener('pointerdown', (event) => {
+  let activePointerId = null;
+  const dragHandle = panel.querySelector('.lyric-head');
+  const stopDragging = () => {
+    dragging = false;
+    activePointerId = null;
+    panel.classList.remove('is-dragging');
+  };
+  dragHandle?.addEventListener('pointerdown', (event) => {
     if (event.target.closest('button, input, a')) return;
-    event.preventDefault();
+    if (window.matchMedia?.('(max-width: 760px)').matches) return;
+    const panelRect = panel.getBoundingClientRect();
+    dragX = event.clientX - panelRect.left;
+    dragY = event.clientY - panelRect.top;
     dragging = true;
-    dragX = event.clientX - panel.offsetLeft;
-    dragY = event.clientY - panel.offsetTop;
+    activePointerId = event.pointerId;
+    dragHandle.setPointerCapture?.(event.pointerId);
     panel.classList.add('is-dragging');
+    event.preventDefault();
   });
-  document.addEventListener('pointermove', (event) => {
-    if (!dragging) return;
+  dragHandle?.addEventListener('pointermove', (event) => {
+    if (!dragging || event.pointerId !== activePointerId) return;
     const hero = document.querySelector('.hero');
     if (!hero) return;
-    const rect = hero.getBoundingClientRect();
-    panel.style.left = `${Math.max(12, Math.min(rect.width - panel.offsetWidth - 12, event.clientX - rect.left - dragX))}px`;
-    panel.style.top = `${Math.max(70, Math.min(rect.height - panel.offsetHeight - 12, event.clientY - rect.top - dragY))}px`;
+    const heroRect = hero.getBoundingClientRect();
+    const maxLeft = Math.max(12, heroRect.width - panel.offsetWidth - 12);
+    const maxTop = Math.max(82, heroRect.height - panel.offsetHeight - 12);
+    const left = Math.max(12, Math.min(maxLeft, event.clientX - heroRect.left - dragX));
+    const top = Math.max(82, Math.min(maxTop, event.clientY - heroRect.top - dragY));
+    panel.style.left = `${left}px`;
+    panel.style.top = `${top}px`;
     panel.style.right = 'auto';
+    event.preventDefault();
   });
-  document.addEventListener('pointerup', () => { dragging = false; panel.classList.remove('is-dragging'); });
+  dragHandle?.addEventListener('pointerup', stopDragging);
+  dragHandle?.addEventListener('pointercancel', stopDragging);
   const render = () => {
     track.style.setProperty('--lyric-shift', `${-active * 58 + offset}px`);
     track.querySelectorAll('p').forEach((node, index) => node.classList.toggle('is-active', index === active));

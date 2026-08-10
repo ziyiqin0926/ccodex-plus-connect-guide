@@ -1362,6 +1362,27 @@ html[data-theme="light"] .community-card--hub { background: linear-gradient(135d
   .hero-copy, .tutorial-stage .step, .nav-links a, .primary, .ghost { animation: none !important; transition: none !important; }
 }
 
+/* Right-docked memory note: only the title bar is draggable. */
+.lyric-panel {
+  position: absolute;
+  top: 24%;
+  right: clamp(24px, 5vw, 82px);
+  left: auto;
+  transform: none;
+  cursor: default;
+}
+.lyric-head {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.lyric-panel.is-dragging,
+.lyric-panel.is-dragging .lyric-head { cursor: grabbing; }
+@media (max-width: 760px) {
+  .lyric-panel { position: relative; top: auto; right: auto; left: auto; transform: none; }
+  .lyric-head { cursor: default; }
+}
+
 /* Clean substrate: the supplied WebGL fluid is the only decorative background. */
 :root {
   --bg: #0e1424;
