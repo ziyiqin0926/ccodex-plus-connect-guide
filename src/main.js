@@ -639,4 +639,5 @@ if (typeof document !== 'undefined') {
   renderToolkit();
   bindEvents();
   bindScrollReveal();
+  drawBallPit();
 }
