@@ -1514,3 +1514,26 @@ html[data-theme="light"] #heroCanvas { opacity: .58; mix-blend-mode: multiply; }
   #heroCanvas { opacity: .28; }
 }
 
+/* Bottom ballpit + draggable right memory card. */
+#heroCanvas {
+  clip-path: inset(66% 0 0 0);
+  opacity: .82;
+}
+.lyric-panel {
+  position: fixed;
+  top: clamp(120px, 25vh, 230px);
+  right: clamp(22px, 4vw, 72px);
+  left: auto;
+  bottom: auto;
+  transform: none;
+  z-index: 20;
+}
+.lyric-head { cursor: grab; user-select: none; touch-action: none; }
+.lyric-panel.is-dragging,
+.lyric-panel.is-dragging .lyric-head { cursor: grabbing; }
+@media (max-width: 760px) {
+  #heroCanvas { clip-path: inset(74% 0 0 0); }
+  .lyric-panel { position: relative; top: auto; right: auto; left: auto; margin: 0 18px 30px; }
+  .lyric-head { cursor: default; touch-action: auto; }
+}
+
