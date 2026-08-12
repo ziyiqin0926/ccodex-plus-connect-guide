@@ -31,23 +31,23 @@ let config = {
   SIM_RESOLUTION: 128,
   DYE_RESOLUTION: 1024,
   CAPTURE_RESOLUTION: 512,
-  DENSITY_DISSIPATION: 1,
-  VELOCITY_DISSIPATION: 0.2,
+  DENSITY_DISSIPATION: 0.985,
+  VELOCITY_DISSIPATION: 0.14,
   PRESSURE: 0.8,
   PRESSURE_ITERATIONS: 20,
   CURL: 30,
-  SPLAT_RADIUS: 0.25,
-  SPLAT_FORCE: 6000,
+  SPLAT_RADIUS: 0.34,
+  SPLAT_FORCE: 8200,
   SHADING: true,
   COLORFUL: true,
-  COLOR_UPDATE_SPEED: 10,
+  COLOR_UPDATE_SPEED: 16,
   PAUSED: false,
   BACK_COLOR: { r: 0, g: 0, b: 0 },
   TRANSPARENT: false,
   BLOOM: true,
   BLOOM_ITERATIONS: 8,
   BLOOM_RESOLUTION: 256,
-  BLOOM_INTENSITY: 0.8,
+  BLOOM_INTENSITY: 1.15,
   BLOOM_THRESHOLD: 0.6,
   BLOOM_SOFT_KNEE: 0.7,
   SUNRAYS: true,
@@ -103,7 +103,7 @@ function livelyAudioListener(audioArray) {
   lastBass = (bass, Math.floor(bass * config.SOUND_SENSITIVITY * 10));
 }
 
-let _randomSplats = false;
+let _randomSplats = true;
 let _audioReact = false;
 function livelyPropertyListener(name, val) {
   switch (name) {
@@ -1527,10 +1527,10 @@ function checkLastMove() {
   return false;
 }
 
-canvas.addEventListener("mousemove", (e) => {
+window.addEventListener("pointermove", (e) => {
   if (checkLastMove()) {
-    let posX = scaleByPixelRatio(e.offsetX);
-    let posY = scaleByPixelRatio(e.offsetY);
+    let posX = scaleByPixelRatio(e.clientX);
+    let posY = scaleByPixelRatio(e.clientY);
     let pointer = pointers.find((p) => p.id == -1);
     if (pointer == null) pointer = new pointerPrototype();
     updatePointerDownData(pointer, -1, posX, posY);
@@ -1538,12 +1538,17 @@ canvas.addEventListener("mousemove", (e) => {
 
   let pointer = pointers[0];
   if (!pointer.down) return;
-  let posX = scaleByPixelRatio(e.offsetX);
-  let posY = scaleByPixelRatio(e.offsetY);
+  let posX = scaleByPixelRatio(e.clientX);
+  let posY = scaleByPixelRatio(e.clientY);
   updatePointerMoveData(pointer, posX, posY);
-});
+}, { passive: true });
 
-window.addEventListener("mouseup", () => {
+window.addEventListener("pointerdown", (e) => {
+  const pointer = pointers[0];
+  updatePointerDownData(pointer, -1, scaleByPixelRatio(e.clientX), scaleByPixelRatio(e.clientY));
+}, { passive: true });
+
+window.addEventListener("pointerup", () => {
   updatePointerUpData(pointers[0]);
 });
 

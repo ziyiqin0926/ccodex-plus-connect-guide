@@ -1364,24 +1364,60 @@ html[data-theme="light"] .community-card--hub { background: linear-gradient(135d
 
 /* Right-docked memory note: only the title bar is draggable. */
 .lyric-panel {
-  position: absolute;
-  top: 24%;
-  right: clamp(24px, 5vw, 82px);
+  position: fixed;
+  top: clamp(106px, 20vh, 184px);
+  right: clamp(22px, 4vw, 72px);
   left: auto;
   transform: none;
   cursor: default;
+  z-index: 12;
+  max-height: min(460px, calc(100vh - 128px));
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
 }
 .lyric-head {
-  cursor: grab;
-  touch-action: none;
-  user-select: none;
+  cursor: default;
+  touch-action: auto;
+  user-select: text;
 }
-.lyric-panel.is-dragging,
-.lyric-panel.is-dragging .lyric-head { cursor: grabbing; }
 @media (max-width: 760px) {
   .lyric-panel { position: relative; top: auto; right: auto; left: auto; transform: none; }
   .lyric-head { cursor: default; }
 }
+
+/* Fluid depth: all color is atmosphere, content remains above an opaque reading scrim. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(42rem 34rem at 8% 18%, rgba(71, 132, 255, .20), transparent 68%),
+    radial-gradient(36rem 30rem at 92% 72%, rgba(83, 224, 193, .13), transparent 70%),
+    radial-gradient(32rem 28rem at 60% 100%, rgba(129, 91, 221, .15), transparent 74%),
+    linear-gradient(180deg, rgba(5, 14, 27, .10), rgba(5, 14, 27, .58));
+}
+#fluidCanvas {
+  opacity: .47;
+  filter: saturate(.96) brightness(.98) contrast(1.08);
+}
+.hero { background: linear-gradient(120deg, rgba(6, 16, 31, .48), rgba(7, 19, 35, .18) 52%, rgba(8, 22, 38, .52)) !important; }
+main { background: linear-gradient(180deg, rgba(7, 18, 34, .72), rgba(8, 20, 37, .88)) !important; }
+.hero-copy, .hero-console, .lyric-panel, main > section { z-index: 2; }
+.hero-copy { text-shadow: 0 2px 16px rgba(1, 7, 18, .68); }
+.hero-console, .lyric-panel { background: rgba(9, 25, 46, .88) !important; border-color: rgba(159, 194, 255, .44) !important; box-shadow: 0 22px 64px rgba(0, 5, 14, .42), inset 0 1px rgba(255,255,255,.06) !important; }
+.step-example, .relay-card, .training-video, .community-card, .optimization-card, .download-card, .tool-card, .case-card, .github-promo { background: rgba(15, 33, 57, .9) !important; }
+html[data-theme="light"] body::after {
+  background:
+    radial-gradient(42rem 34rem at 8% 18%, rgba(71, 132, 255, .14), transparent 68%),
+    radial-gradient(36rem 30rem at 92% 72%, rgba(26, 170, 137, .11), transparent 70%),
+    linear-gradient(180deg, rgba(244, 248, 255, .06), rgba(235, 241, 250, .62));
+}
+html[data-theme="light"] #fluidCanvas { opacity: .24; filter: saturate(.82) brightness(1.05) contrast(1.02); }
+html[data-theme="light"] .hero { background: linear-gradient(120deg, rgba(241, 246, 254, .58), rgba(239, 245, 253, .30) 52%, rgba(239, 238, 252, .56)) !important; }
+html[data-theme="light"] main { background: linear-gradient(180deg, rgba(237, 243, 252, .72), rgba(247, 250, 255, .88)) !important; }
+html[data-theme="light"] .hero-console, html[data-theme="light"] .lyric-panel { background: rgba(252, 254, 255, .92) !important; border-color: rgba(70, 103, 187, .28) !important; box-shadow: 0 18px 48px rgba(43, 64, 102, .13) !important; }
+html[data-theme="light"] .step-example, html[data-theme="light"] .relay-card, html[data-theme="light"] .training-video, html[data-theme="light"] .community-card, html[data-theme="light"] .optimization-card, html[data-theme="light"] .download-card, html[data-theme="light"] .tool-card, html[data-theme="light"] .case-card, html[data-theme="light"] .github-promo { background: rgba(255,255,255,.94) !important; }
 
 /* Clean substrate: the supplied WebGL fluid is the only decorative background. */
 :root {
