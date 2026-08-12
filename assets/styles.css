@@ -1537,3 +1537,20 @@ html[data-theme="light"] #heroCanvas { opacity: .58; mix-blend-mode: multiply; }
   .lyric-head { cursor: default; touch-action: auto; }
 }
 
+/* Single-screen landing recovery: content starts immediately below the fixed nav. */
+.hero {
+  min-height: 760px;
+  height: min(100svh, 900px);
+}
+.hero-copy {
+  padding-top: clamp(112px, 15vh, 150px) !important;
+  padding-bottom: 210px;
+}
+.hero-console { top: clamp(138px, 20vh, 206px); }
+#heroCanvas { clip-path: inset(72% 0 0 0); }
+@media (max-width: 760px) {
+  .hero { min-height: 820px; height: auto; }
+  .hero-copy { padding-top: 136px !important; padding-bottom: 26px; }
+  #heroCanvas { clip-path: inset(78% 0 0 0); }
+}
+
