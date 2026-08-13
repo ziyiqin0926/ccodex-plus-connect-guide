@@ -348,6 +348,7 @@ function bindLyrics() {
   let dragX = 0;
   let dragY = 0;
   let activePointerId = null;
+  const hero = document.querySelector('.hero');
   const dragHandle = panel.querySelector('.lyric-head');
   dragHandle?.addEventListener('pointerdown', (event) => {
     if (event.target.closest('button, input, a')) return;
@@ -366,10 +367,13 @@ function bindLyrics() {
   });
   document.addEventListener('pointermove', (event) => {
     if (!dragging || event.pointerId !== activePointerId) return;
-    const maxLeft = Math.max(12, window.innerWidth - panel.offsetWidth - 12);
-    const maxTop = Math.max(12, window.innerHeight - panel.offsetHeight - 12);
-    panel.style.left = `${Math.max(12, Math.min(maxLeft, event.clientX - dragX))}px`;
-    panel.style.top = `${Math.max(12, Math.min(maxTop, event.clientY - dragY))}px`;
+    const bounds = hero?.getBoundingClientRect();
+    const minLeft = Math.max(12, bounds?.left + 12 || 12);
+    const maxLeft = Math.min(window.innerWidth - panel.offsetWidth - 12, (bounds?.right || window.innerWidth) - panel.offsetWidth - 12);
+    const minTop = Math.max(78, bounds?.top + 78 || 78);
+    const maxTop = Math.min(window.innerHeight - panel.offsetHeight - 12, (bounds?.bottom || window.innerHeight) - panel.offsetHeight - 12);
+    panel.style.left = `${Math.max(minLeft, Math.min(Math.max(minLeft, maxLeft), event.clientX - dragX))}px`;
+    panel.style.top = `${Math.max(minTop, Math.min(Math.max(minTop, maxTop), event.clientY - dragY))}px`;
   });
   const stopDragging = (event) => {
     if (!dragging || (event.pointerId != null && event.pointerId !== activePointerId)) return;
@@ -674,4 +678,5 @@ if (typeof document !== 'undefined') {
   renderToolkit();
   bindEvents();
   bindScrollReveal();
+  drawBallPit();
 }
