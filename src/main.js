@@ -345,44 +345,26 @@ function bindLyrics() {
   let offset = 0;
   let playing = true;
   let dragging = false;
-  let pointerId = null;
-  let startX = 0;
-  let startY = 0;
-  let panelX = 0;
-  let panelY = 0;
-  const handle = panel.querySelector('.lyric-head');
-  const endDrag = () => {
-    dragging = false;
-    pointerId = null;
-    panel.classList.remove('is-dragging');
-  };
-  handle?.addEventListener('pointerdown', (event) => {
-    if (event.target.closest('button, input, a') || window.matchMedia?.('(max-width: 760px)').matches) return;
-    const rect = panel.getBoundingClientRect();
+  let dragX = 0;
+  let dragY = 0;
+  panel.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('button, input, a')) return;
+    event.preventDefault();
     dragging = true;
-    pointerId = event.pointerId;
-    startX = event.clientX;
-    startY = event.clientY;
-    panelX = rect.left;
-    panelY = rect.top;
-    handle.setPointerCapture?.(event.pointerId);
+    dragX = event.clientX - panel.offsetLeft;
+    dragY = event.clientY - panel.offsetTop;
     panel.classList.add('is-dragging');
-    event.preventDefault();
   });
-  handle?.addEventListener('pointermove', (event) => {
-    if (!dragging || event.pointerId !== pointerId) return;
-    const maxX = Math.max(12, window.innerWidth - panel.offsetWidth - 12);
-    const maxY = Math.max(78, window.innerHeight - panel.offsetHeight - 12);
-    const left = Math.max(12, Math.min(maxX, panelX + event.clientX - startX));
-    const top = Math.max(78, Math.min(maxY, panelY + event.clientY - startY));
-    panel.style.left = `${left}px`;
-    panel.style.top = `${top}px`;
+  document.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    panel.style.left = `${Math.max(12, Math.min(rect.width - panel.offsetWidth - 12, event.clientX - rect.left - dragX))}px`;
+    panel.style.top = `${Math.max(70, Math.min(rect.height - panel.offsetHeight - 12, event.clientY - rect.top - dragY))}px`;
     panel.style.right = 'auto';
-    panel.style.bottom = 'auto';
-    event.preventDefault();
   });
-  handle?.addEventListener('pointerup', endDrag);
-  handle?.addEventListener('pointercancel', endDrag);
+  document.addEventListener('pointerup', () => { dragging = false; panel.classList.remove('is-dragging'); });
   const render = () => {
     track.style.setProperty('--lyric-shift', `${-active * 58 + offset}px`);
     track.querySelectorAll('p').forEach((node, index) => node.classList.toggle('is-active', index === active));
@@ -417,7 +399,6 @@ function drawBallPit() {
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
-  const ballpitTop = Math.max(92, rect.height - Math.min(245, rect.height * .32));
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
   ctx.scale(dpr, dpr);
@@ -426,11 +407,12 @@ function drawBallPit() {
   const colors = ['#9fe4d2', '#9ab7ff', '#f4bf9c', '#dbe795', '#d9c7ff'];
   const fireworks = [];
   const seed = (value) => (Math.sin(value * 12.9898) * 43758.5453) % 1;
-  const balls = Array.from({ length: 24 }, (_, index) => {
+  const balls = Array.from({ length: 28 }, (_, index) => {
+    const side = index % 3;
     const randomX = Math.abs(seed(index + 2));
     return {
-    x: 20 + randomX * (rect.width - 40),
-    y: ballpitTop + 18 + Math.abs(seed(index + 8)) * Math.max(38, rect.height - ballpitTop - 30),
+    x: side === 0 ? 20 + randomX * rect.width * .22 : side === 1 ? rect.width * .76 + randomX * rect.width * .22 : rect.width * .28 + randomX * rect.width * .44,
+    y: 20 + Math.abs(seed(index + 8)) * rect.height * .9,
     vx: (index % 2 ? 1 : -1) * (.35 + Math.abs(seed(index + 4)) * .8),
     vy: ((index % 5) - 2) * .26,
     r: 18 + Math.abs(seed(index + 6)) * 30,
@@ -469,7 +451,7 @@ function drawBallPit() {
     const h = rect.height;
     ctx.clearRect(0, 0, w, h);
     balls.forEach((ball) => {
-      ball.vy += .16;
+      ball.vy += .12;
       ball.vx += Math.sin(tick * .018 + ball.phase) * .012;
       ball.vy += Math.cos(tick * .014 + ball.phase) * .008;
       ball.vx *= .999;
@@ -488,8 +470,26 @@ function drawBallPit() {
       ball.x += ball.vx;
       ball.y += ball.vy;
       if (ball.x < ball.r || ball.x > w - ball.r) { ball.vx *= -.9; ball.x = Math.max(ball.r, Math.min(w - ball.r, ball.x)); }
-      if (ball.y < ballpitTop + ball.r) { ball.vy = Math.abs(ball.vy) * .36; ball.y = ballpitTop + ball.r; }
-      if (ball.y > h - ball.r) { ball.vy *= -.76; ball.y = h - ball.r; }
+      if (ball.y < ball.r || ball.y > h - ball.r) { ball.vy *= -.82; ball.y = Math.max(ball.r, Math.min(h - ball.r, ball.y)); }
+      document.querySelectorAll('.hero-copy, .lyric-panel').forEach((obstacle) => {
+        const box = obstacle.getBoundingClientRect();
+        const canvasBox = canvas.getBoundingClientRect();
+        const left = box.left - canvasBox.left;
+        const right = box.right - canvasBox.left;
+        const top = box.top - canvasBox.top;
+        const bottom = box.bottom - canvasBox.top;
+        if (ball.x + ball.r < left || ball.x - ball.r > right || ball.y + ball.r < top || ball.y - ball.r > bottom) return;
+        const distances = [
+          { edge: 'left', value: Math.abs(ball.x + ball.r - left) },
+          { edge: 'right', value: Math.abs(right - (ball.x - ball.r)) },
+          { edge: 'top', value: Math.abs(ball.y + ball.r - top) },
+          { edge: 'bottom', value: Math.abs(bottom - (ball.y - ball.r)) },
+        ].sort((a, b) => a.value - b.value)[0];
+        if (distances.edge === 'left') { ball.x = left - ball.r; ball.vx = -Math.abs(ball.vx) * .9; }
+        if (distances.edge === 'right') { ball.x = right + ball.r; ball.vx = Math.abs(ball.vx) * .9; }
+        if (distances.edge === 'top') { ball.y = top - ball.r; ball.vy = -Math.abs(ball.vy) * .9; }
+        if (distances.edge === 'bottom') { ball.y = bottom + ball.r; ball.vy = Math.abs(ball.vy) * .9; }
+      });
     });
     for (let a = 0; a < balls.length; a += 1) {
       for (let b = a + 1; b < balls.length; b += 1) {
@@ -660,5 +660,4 @@ if (typeof document !== 'undefined') {
   renderToolkit();
   bindEvents();
   bindScrollReveal();
-  drawBallPit();
 }
