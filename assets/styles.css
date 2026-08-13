@@ -1421,9 +1421,3 @@ html[data-theme="light"] .primary { background: linear-gradient(135deg, #5564d4,
 html[data-theme="light"] .primary:hover { background: linear-gradient(135deg, #6474df, #8568d8); }
 html[data-theme="light"] .step, html[data-theme="light"] .step-example, html[data-theme="light"] .relay-card, html[data-theme="light"] .training-video, html[data-theme="light"] .community-card, html[data-theme="light"] .optimization-card, html[data-theme="light"] .download-card, html[data-theme="light"] .tool-card, html[data-theme="light"] .case-card { background: rgba(245,247,251,.82); border-color: rgba(123,140,168,.38); box-shadow: 0 8px 24px rgba(55,72,106,.08); }
 
-/* Stable lyric dock: viewport anchored, drag only from the header. */
-.lyric-panel { position: fixed !important; top: clamp(110px, 20vh, 190px) !important; right: clamp(18px, 4vw, 72px) !important; left: auto !important; transform: none !important; z-index: 40 !important; }
-.lyric-head { cursor: grab; touch-action: none; }
-.lyric-panel.is-dragging, .lyric-panel.is-dragging .lyric-head { cursor: grabbing; }
-@media (max-width: 760px) { .lyric-panel { top: auto !important; right: 12px !important; bottom: 14px !important; left: 12px !important; width: auto !important; } }
-

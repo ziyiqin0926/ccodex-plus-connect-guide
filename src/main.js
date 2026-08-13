@@ -88,7 +88,7 @@ function renderStepReferences(index) {
   return `
     <div class="step-references">
       ${items.map((item) => item.panel
-        ? `<article class="relay-card reference-panel"><div><span>官方 API 方案</span><h3>${item.title}</h3></div><p>${item.note}</p><div class="download-actions"><a class="primary link-button" href="${item.url}" target="_blank" rel="noreferrer">打开 DeepSeek 探秘</a></div></article>`
+        ? `<article class="relay-card reference-panel"><div><span>官方 API 方案</span><h3>${item.title}</h3></div><p>${item.note}</p><div class="download-actions"><a class="primary link-button" href="${item.url}" target="_blank" rel="noreferrer">打开 DeepSeek API</a></div></article>`
         : item.cta
         ? `<a class="primary link-button" href="${item.url}" target="_blank" rel="noreferrer">${item.title}</a>`
         : `<a href="${item.url}" target="_blank" rel="noreferrer"><span>↗</span>${item.title}</a>`).join('')}
@@ -347,38 +347,24 @@ function bindLyrics() {
   let dragging = false;
   let dragX = 0;
   let dragY = 0;
-  let activePointerId = null;
-  const dragHandle = panel.querySelector('.lyric-head');
-  dragHandle?.addEventListener('pointerdown', (event) => {
+  panel.addEventListener('pointerdown', (event) => {
     if (event.target.closest('button, input, a')) return;
     event.preventDefault();
-    const rect = panel.getBoundingClientRect();
     dragging = true;
-    activePointerId = event.pointerId;
-    dragX = event.clientX - rect.left;
-    dragY = event.clientY - rect.top;
-    panel.style.position = 'fixed';
-    panel.style.left = `${rect.left}px`;
-    panel.style.top = `${rect.top}px`;
-    panel.style.right = 'auto';
+    dragX = event.clientX - panel.offsetLeft;
+    dragY = event.clientY - panel.offsetTop;
     panel.classList.add('is-dragging');
-    dragHandle.setPointerCapture?.(event.pointerId);
   });
   document.addEventListener('pointermove', (event) => {
-    if (!dragging || event.pointerId !== activePointerId) return;
-    const maxLeft = Math.max(12, window.innerWidth - panel.offsetWidth - 12);
-    const maxTop = Math.max(12, window.innerHeight - panel.offsetHeight - 12);
-    panel.style.left = `${Math.max(12, Math.min(maxLeft, event.clientX - dragX))}px`;
-    panel.style.top = `${Math.max(12, Math.min(maxTop, event.clientY - dragY))}px`;
+    if (!dragging) return;
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    panel.style.left = `${Math.max(12, Math.min(rect.width - panel.offsetWidth - 12, event.clientX - rect.left - dragX))}px`;
+    panel.style.top = `${Math.max(70, Math.min(rect.height - panel.offsetHeight - 12, event.clientY - rect.top - dragY))}px`;
+    panel.style.right = 'auto';
   });
-  const stopDragging = (event) => {
-    if (!dragging || (event.pointerId != null && event.pointerId !== activePointerId)) return;
-    dragging = false;
-    activePointerId = null;
-    panel.classList.remove('is-dragging');
-  };
-  document.addEventListener('pointerup', stopDragging);
-  document.addEventListener('pointercancel', stopDragging);
+  document.addEventListener('pointerup', () => { dragging = false; panel.classList.remove('is-dragging'); });
   const render = () => {
     track.style.setProperty('--lyric-shift', `${-active * 58 + offset}px`);
     track.querySelectorAll('p').forEach((node, index) => node.classList.toggle('is-active', index === active));
