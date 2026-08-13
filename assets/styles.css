@@ -1421,16 +1421,18 @@ html[data-theme="light"] .primary { background: linear-gradient(135deg, #5564d4,
 html[data-theme="light"] .primary:hover { background: linear-gradient(135deg, #6474df, #8568d8); }
 html[data-theme="light"] .step, html[data-theme="light"] .step-example, html[data-theme="light"] .relay-card, html[data-theme="light"] .training-video, html[data-theme="light"] .community-card, html[data-theme="light"] .optimization-card, html[data-theme="light"] .download-card, html[data-theme="light"] .tool-card, html[data-theme="light"] .case-card { background: rgba(245,247,251,.82); border-color: rgba(123,140,168,.38); box-shadow: 0 8px 24px rgba(55,72,106,.08); }
 
-/* Stable lyric dock: viewport anchored, drag only from the header. */
-.lyric-panel { position: fixed !important; top: clamp(110px, 20vh, 190px) !important; right: clamp(18px, 4vw, 72px) !important; left: auto !important; transform: none !important; z-index: 40 !important; }
+/* First screen is the setup headline; the memory panel lives beneath it. */
+.hero { min-height: max(940px, 100svh) !important; }
+.hero-copy { padding-top: clamp(118px, 14vh, 156px) !important; padding-bottom: clamp(350px, 42vh, 470px) !important; }
+.lyric-panel { position: absolute !important; top: auto !important; right: clamp(18px, 4vw, 72px) !important; bottom: clamp(28px, 5vh, 58px) !important; left: auto !important; transform: none !important; z-index: 4 !important; }
 .lyric-head { cursor: grab; touch-action: none; }
 .lyric-panel.is-dragging, .lyric-panel.is-dragging .lyric-head { cursor: grabbing; }
-@media (max-width: 760px) { .lyric-panel { top: auto !important; right: 12px !important; bottom: 14px !important; left: 12px !important; width: auto !important; } }
+@media (max-width: 760px) { .hero { min-height: auto !important; } .hero-copy { padding-bottom: 28px !important; } .lyric-panel { position: relative !important; top: auto !important; right: auto !important; bottom: auto !important; left: auto !important; width: auto !important; } }
 
 /* Restore the earlier physics-ball hero without removing the current page content. */
 body::before, body::after { display: none !important; }
 #fluidCanvas { display: none !important; }
-#heroCanvas { display: block !important; position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; opacity: .82; mix-blend-mode: screen; pointer-events: none; clip-path: inset(66% 0 0 0); }
+#heroCanvas { display: block !important; position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; opacity: .82; mix-blend-mode: screen; pointer-events: none; clip-path: inset(72% 0 0 0); }
 .hero { overflow: hidden; background: radial-gradient(circle at 82% 16%, rgba(121,92,217,.22), transparent 28%), radial-gradient(circle at 12% 72%, rgba(40,185,158,.14), transparent 34%), linear-gradient(138deg, #081424 0%, #111b36 48%, #15102e 100%) !important; }
 .hero > :not(#heroCanvas) { position: relative; z-index: 2; }
 .hero-copy, .hero-console, .lyric-panel { z-index: 3; }

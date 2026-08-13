@@ -354,26 +354,28 @@ function bindLyrics() {
     if (event.target.closest('button, input, a')) return;
     event.preventDefault();
     const rect = panel.getBoundingClientRect();
+    const heroRect = hero?.getBoundingClientRect();
+    if (!heroRect || window.matchMedia?.('(max-width: 760px)').matches) return;
     dragging = true;
     activePointerId = event.pointerId;
     dragX = event.clientX - rect.left;
     dragY = event.clientY - rect.top;
-    panel.style.position = 'fixed';
-    panel.style.left = `${rect.left}px`;
-    panel.style.top = `${rect.top}px`;
+    panel.style.position = 'absolute';
+    panel.style.left = `${rect.left - heroRect.left}px`;
+    panel.style.top = `${rect.top - heroRect.top}px`;
     panel.style.right = 'auto';
+    panel.style.bottom = 'auto';
     panel.classList.add('is-dragging');
     dragHandle.setPointerCapture?.(event.pointerId);
   });
   document.addEventListener('pointermove', (event) => {
     if (!dragging || event.pointerId !== activePointerId) return;
     const bounds = hero?.getBoundingClientRect();
-    const minLeft = Math.max(12, bounds?.left + 12 || 12);
-    const maxLeft = Math.min(window.innerWidth - panel.offsetWidth - 12, (bounds?.right || window.innerWidth) - panel.offsetWidth - 12);
-    const minTop = Math.max(78, bounds?.top + 78 || 78);
-    const maxTop = Math.min(window.innerHeight - panel.offsetHeight - 12, (bounds?.bottom || window.innerHeight) - panel.offsetHeight - 12);
-    panel.style.left = `${Math.max(minLeft, Math.min(Math.max(minLeft, maxLeft), event.clientX - dragX))}px`;
-    panel.style.top = `${Math.max(minTop, Math.min(Math.max(minTop, maxTop), event.clientY - dragY))}px`;
+    if (!bounds) return;
+    const maxLeft = Math.max(12, bounds.width - panel.offsetWidth - 12);
+    const maxTop = Math.max(92, bounds.height - panel.offsetHeight - 12);
+    panel.style.left = `${Math.max(12, Math.min(maxLeft, event.clientX - bounds.left - dragX))}px`;
+    panel.style.top = `${Math.max(92, Math.min(maxTop, event.clientY - bounds.top - dragY))}px`;
   });
   const stopDragging = (event) => {
     if (!dragging || (event.pointerId != null && event.pointerId !== activePointerId)) return;
