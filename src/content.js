@@ -23,7 +23,7 @@
     verified: false,
     checklist: ['官方 API：准备 API Key 和官方 Base URL', '中转站：找到域名并创建令牌，不要把令牌发到群里', '保存供应商后记下供应商名和模型名'],
     example: {
-      title: '配置样例：以 DeepSeek 为例',
+      title: 'DeepSeek 探秘：配置样例',
       text: '供应商 DeepSeek · Base URL https://api.deepseek.com · API 格式 OpenAI Chat Completions。',
     },
   },
@@ -108,7 +108,7 @@ export const referenceLinks = [
     url: 'https://store.rg-adguard.net/',
   },
   {
-    title: '官方 API：以 DeepSeek 为例',
+    title: 'DeepSeek 探秘：官方 API',
     note: 'Base URL 填 https://api.deepseek.com；API 格式选 OpenAI Chat Completions。这里只提供官方 API 入口。',
     url: 'https://platform.deepseek.com/usage',
     cta: true,
