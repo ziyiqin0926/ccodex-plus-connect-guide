@@ -672,17 +672,6 @@ function drawHero(canvasSelector = '#heroCanvas', hostSelector = '.hero') {
 }
 
 if (typeof document !== 'undefined') {
-  const hero = document.querySelector('.hero');
-  const heroCopy = document.querySelector('.hero-copy');
-  const heroCanvas = document.querySelector('#heroCanvas');
-  const lyricPanel = document.querySelector('.lyric-panel');
-  if (hero && heroCopy && heroCanvas && lyricPanel) {
-    const after = document.createElement('section');
-    after.className = 'hero-after';
-    after.setAttribute('aria-label', '互动演示区');
-    heroCopy.insertAdjacentElement('afterend', after);
-    after.append(heroCanvas, lyricPanel);
-  }
   const creatorNote = document.createElement('p');
   creatorNote.className = 'creator-note';
   creatorNote.textContent = '当然了，你现在看到的这个网站也是 Codex 纯一体生成的，没写一行代码，我相信你也可以。';
