@@ -1432,7 +1432,7 @@ html[data-theme="light"] .step, html[data-theme="light"] .step-example, html[dat
 /* Restore the earlier physics-ball hero without removing the current page content. */
 body::before, body::after { display: none !important; }
 #fluidCanvas { display: none !important; }
-#heroCanvas { display: block !important; position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; opacity: .82; mix-blend-mode: screen; pointer-events: none; clip-path: inset(72% 0 0 0); }
+#heroCanvas { display: block !important; position: absolute; top: auto; right: 0; bottom: 0; left: 0; z-index: 0; width: 100%; height: min(300px, 32vh); opacity: .82; mix-blend-mode: screen; pointer-events: none; clip-path: none; }
 .hero { overflow: hidden; background: radial-gradient(circle at 82% 16%, rgba(121,92,217,.22), transparent 28%), radial-gradient(circle at 12% 72%, rgba(40,185,158,.14), transparent 34%), linear-gradient(138deg, #081424 0%, #111b36 48%, #15102e 100%) !important; }
 .hero > :not(#heroCanvas) { position: relative; z-index: 2; }
 .hero-copy, .hero-console, .lyric-panel { z-index: 3; }
@@ -1440,5 +1440,13 @@ main { background: #0d1829 !important; }
 html[data-theme="light"] .hero { background: radial-gradient(circle at 82% 16%, rgba(121,92,217,.18), transparent 28%), radial-gradient(circle at 12% 72%, rgba(40,185,158,.12), transparent 34%), linear-gradient(138deg, #edf3fb 0%, #e5ebf8 48%, #f0eafa 100%) !important; }
 html[data-theme="light"] main { background: #eef3fa !important; }
 html[data-theme="light"] #heroCanvas { opacity: .58; mix-blend-mode: multiply; }
-@media (max-width: 760px) { #heroCanvas { clip-path: inset(74% 0 0 0); } }
+@media (max-width: 760px) { #heroCanvas { height: 210px; } }
+
+/* Keep the first viewport for the headline; move physics and notes after it. */
+.hero { min-height: auto !important; }
+.hero-copy { padding-bottom: 42px !important; }
+.hero-after { position: relative; height: min(340px, 38vh); min-height: 260px; overflow: hidden; }
+.hero-after #heroCanvas { position: absolute; inset: 0; display: block !important; width: 100%; height: 100%; clip-path: none; }
+.hero-after .lyric-panel { position: absolute !important; top: 22px !important; right: clamp(18px, 4vw, 72px) !important; bottom: auto !important; left: auto !important; z-index: 3 !important; }
+@media (max-width: 760px) { .hero-after { height: auto; min-height: 360px; } .hero-after .lyric-panel { position: relative !important; top: auto !important; right: auto !important; margin: 18px; } }
 
