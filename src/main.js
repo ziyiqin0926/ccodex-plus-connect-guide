@@ -355,8 +355,8 @@ function bindLyrics() {
   let activePointerId = null;
   const hero = document.querySelector('.hero');
   const dragHandle = panel.querySelector('.lyric-head');
-  dragHandle?.addEventListener('pointerdown', (event) => {
-    if (event.target.closest('button, input, a')) return;
+  panel.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('button, input, a, .lyric-track')) return;
     event.preventDefault();
     const rect = panel.getBoundingClientRect();
     const heroRect = hero?.getBoundingClientRect();
@@ -371,7 +371,7 @@ function bindLyrics() {
     panel.style.right = 'auto';
     panel.style.bottom = 'auto';
     panel.classList.add('is-dragging');
-    dragHandle.setPointerCapture?.(event.pointerId);
+    (dragHandle || panel).setPointerCapture?.(event.pointerId);
   });
   document.addEventListener('pointermove', (event) => {
     if (!dragging || event.pointerId !== activePointerId) return;
