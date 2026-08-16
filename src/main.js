@@ -24,6 +24,7 @@ const lyricLines = [
 
 export const ballPhysics = Object.freeze({
   gravity: 0.008,
+  buoyancy: 0.028,
   floorBounce: 0.96,
   initialVelocity: 2.4,
 });
@@ -443,7 +444,7 @@ function drawBallPit() {
     const randomX = Math.abs(seed(index + 2));
     return {
     x: side === 0 ? 20 + randomX * rect.width * .22 : side === 1 ? rect.width * .76 + randomX * rect.width * .22 : rect.width * .28 + randomX * rect.width * .44,
-    y: 20 + Math.abs(seed(index + 8)) * rect.height * .9,
+    y: rect.height * .15 + Math.abs(seed(index + 8)) * rect.height * .65,
     vx: (index % 2 ? 1 : -1) * (.35 + Math.abs(seed(index + 4)) * .8),
     vy: (seed(index + 12) * 2 - 1) * ballPhysics.initialVelocity,
     r: 18 + Math.abs(seed(index + 6)) * 30,
@@ -483,6 +484,7 @@ function drawBallPit() {
     ctx.clearRect(0, 0, w, h);
     balls.forEach((ball) => {
       ball.vy += ballPhysics.gravity;
+      ball.vy -= Math.max(0, ball.y / h - .18) * ballPhysics.buoyancy;
       ball.vx += Math.sin(tick * .018 + ball.phase) * .012;
       ball.vy += Math.cos(tick * .014 + ball.phase) * .028;
       ball.vx *= .998;

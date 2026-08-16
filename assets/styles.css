@@ -1460,3 +1460,28 @@ html[data-theme="light"] .tool-card--gpt56 .tool-badge, html[data-theme="light"]
   #heroCanvas { clip-path: none !important; opacity: .52 !important; }
 }
 
+/* One continuous composition: hero physics, tutorial and utility modules share one visual ground. */
+:root { --page-width: 1080px; }
+body { background: #0d1829; }
+.hero {
+  min-height: clamp(720px, 92svh, 900px) !important;
+  background: radial-gradient(circle at 80% 18%, rgba(121,92,217,.2), transparent 30%), radial-gradient(circle at 12% 62%, rgba(40,185,158,.13), transparent 34%), linear-gradient(160deg, #081424 0%, #111f3a 52%, #0d1829 100%) !important;
+}
+.hero-copy {
+  width: min(660px, calc(100% - 36px)) !important;
+  padding-top: clamp(116px, 15svh, 160px) !important;
+  padding-bottom: 72px !important;
+}
+#heroCanvas { opacity: .62 !important; mix-blend-mode: screen; }
+main { margin-top: -1px; padding-bottom: 72px; background: #0d1829 !important; }
+main > section, .local-optimization-section {
+  width: min(var(--page-width), calc(100% - 36px)) !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 760px) {
+  .hero { min-height: 100svh !important; }
+  .hero-copy { width: min(100% - 28px, 660px) !important; padding-top: 132px !important; padding-bottom: 64px !important; }
+  main > section, .local-optimization-section { width: min(var(--page-width), calc(100% - 28px)) !important; }
+}
+
