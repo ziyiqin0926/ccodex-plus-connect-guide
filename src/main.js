@@ -363,7 +363,7 @@ function bindLyrics() {
   const hero = document.querySelector('.hero');
   const dragHandle = panel.querySelector('.lyric-head');
   panel.addEventListener('pointerdown', (event) => {
-    if (event.target.closest('button, input, a, .lyric-track')) return;
+    if (event.button !== 0 || event.target.closest('button, input, a, .lyric-track')) return;
     event.preventDefault();
     const rect = panel.getBoundingClientRect();
     const heroRect = hero?.getBoundingClientRect();
@@ -438,6 +438,14 @@ function drawBallPit() {
   const pointer = { x: rect.width * .72, y: rect.height * .5, active: false };
   const colors = ['#9fe4d2', '#9ab7ff', '#f4bf9c', '#dbe795', '#d9c7ff'];
   const fireworks = [];
+  const obstacleNodes = Array.from(document.querySelectorAll('.hero-copy > p, .hero-copy > h1, .hero-copy > .hero-actions, .lyric-panel'));
+  const getObstacleBoxes = () => {
+    const canvasBox = canvas.getBoundingClientRect();
+    return obstacleNodes.map((obstacle) => {
+      const box = obstacle.getBoundingClientRect();
+      return { left: box.left - canvasBox.left, right: box.right - canvasBox.left, top: box.top - canvasBox.top, bottom: box.bottom - canvasBox.top };
+    });
+  };
   const seed = (value) => (Math.sin(value * 12.9898) * 43758.5453) % 1;
   const balls = Array.from({ length: 28 }, (_, index) => {
     const side = index % 3;
@@ -482,6 +490,7 @@ function drawBallPit() {
     const w = rect.width;
     const h = rect.height;
     ctx.clearRect(0, 0, w, h);
+    const obstacleBoxes = getObstacleBoxes();
     balls.forEach((ball) => {
       ball.vy += ballPhysics.gravity;
       ball.vy -= Math.max(0, ball.y / h - .18) * ballPhysics.buoyancy;
@@ -504,13 +513,7 @@ function drawBallPit() {
       ball.y += ball.vy;
       if (ball.x < ball.r || ball.x > w - ball.r) { ball.vx *= -.9; ball.x = Math.max(ball.r, Math.min(w - ball.r, ball.x)); }
       if (ball.y < ball.r || ball.y > h - ball.r) { ball.vy *= -ballPhysics.floorBounce; ball.y = Math.max(ball.r, Math.min(h - ball.r, ball.y)); }
-      document.querySelectorAll('.hero-copy, .lyric-panel').forEach((obstacle) => {
-        const box = obstacle.getBoundingClientRect();
-        const canvasBox = canvas.getBoundingClientRect();
-        const left = box.left - canvasBox.left;
-        const right = box.right - canvasBox.left;
-        const top = box.top - canvasBox.top;
-        const bottom = box.bottom - canvasBox.top;
+      obstacleBoxes.forEach(({ left, right, top, bottom }) => {
         if (ball.x + ball.r < left || ball.x - ball.r > right || ball.y + ball.r < top || ball.y - ball.r > bottom) return;
         const distances = [
           { edge: 'left', value: Math.abs(ball.x + ball.r - left) },
