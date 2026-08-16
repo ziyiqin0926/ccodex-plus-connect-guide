@@ -186,6 +186,12 @@ function renderToolkit() {
         <p>需要清理旧版本、重新安装或排查残留时使用。下载后解压，再按工具说明操作。</p>
         <a class="tool-link" href="assets/codex-uninstall-tool.zip" download>下载卸载工具 ↗</a>
       </article>
+      <article class="tool-card tool-card--gpt56">
+        <span class="tool-badge">效率增强 · 合规 Skill</span>
+        <h3>GPT‑5.6 模型路由 Skill</h3>
+        <p>按任务类型选择 Sol、Terra、Luna 配置，侧重稳定性与效率；不改变平台规则。</p>
+        <a class="tool-link" href="https://github.com/AlexAI-MCP/GPT5.6-SOLTELU-Model-Inverter" target="_blank" rel="noreferrer">打开 Skill 仓库 ↗</a>
+      </article>
     </div>
     <aside class="tool-disclosure">
       <strong>公开声明</strong>

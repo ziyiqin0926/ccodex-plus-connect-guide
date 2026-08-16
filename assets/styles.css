@@ -1438,3 +1438,13 @@ html[data-theme="light"] main { background: #eef3fa !important; }
 html[data-theme="light"] #heroCanvas { opacity: .58; mix-blend-mode: multiply; }
 @media (max-width: 760px) { .hero { min-height: auto !important; } .hero-copy { width: auto !important; padding-top: 148px !important; padding-bottom: 250px !important; } #heroCanvas { clip-path: inset(76% 0 0 0); } .lyric-panel { position: relative !important; top: auto !important; right: auto !important; margin: 0 18px 30px; width: auto !important; } }
 
+/* Remove the suspended gap between the headline and the four-step guide. */
+.hero { min-height: 780px !important; }
+.hero-copy { padding-bottom: 24px !important; }
+#heroCanvas { clip-path: inset(63% 0 0 0); }
+.tool-card--gpt56 { border-color: rgba(129, 140, 248, .52); background: linear-gradient(145deg, rgba(99,102,241,.12), rgba(18,34,56,.86)); }
+.tool-card--gpt56 .tool-badge, .tool-card--gpt56 .tool-link { color: #a5b4fc; }
+html[data-theme="light"] .tool-card--gpt56 { background: linear-gradient(145deg, rgba(224,231,255,.88), rgba(245,247,251,.88)); }
+html[data-theme="light"] .tool-card--gpt56 .tool-badge, html[data-theme="light"] .tool-card--gpt56 .tool-link { color: #4338ca; }
+@media (max-width: 760px) { .hero { min-height: auto !important; } .hero-copy { padding-bottom: 210px !important; } #heroCanvas { clip-path: inset(70% 0 0 0); } }
+
