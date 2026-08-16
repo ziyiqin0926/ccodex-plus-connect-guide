@@ -22,6 +22,12 @@ const lyricLines = [
   '如果文档里的视频帮助到你，请给原博主点关注、收藏。',
 ];
 
+export const ballPhysics = Object.freeze({
+  gravity: 0.008,
+  floorBounce: 0.96,
+  initialVelocity: 2.4,
+});
+
 export function buildStepHtml(step, index) {
   return `
     <article class="step" id="${step.id}">
@@ -439,7 +445,7 @@ function drawBallPit() {
     x: side === 0 ? 20 + randomX * rect.width * .22 : side === 1 ? rect.width * .76 + randomX * rect.width * .22 : rect.width * .28 + randomX * rect.width * .44,
     y: 20 + Math.abs(seed(index + 8)) * rect.height * .9,
     vx: (index % 2 ? 1 : -1) * (.35 + Math.abs(seed(index + 4)) * .8),
-    vy: ((index % 5) - 2) * .26,
+    vy: (seed(index + 12) * 2 - 1) * ballPhysics.initialVelocity,
     r: 18 + Math.abs(seed(index + 6)) * 30,
     color: colors[index % colors.length],
     phase: index * .73,
@@ -476,11 +482,11 @@ function drawBallPit() {
     const h = rect.height;
     ctx.clearRect(0, 0, w, h);
     balls.forEach((ball) => {
-      ball.vy += .12;
+      ball.vy += ballPhysics.gravity;
       ball.vx += Math.sin(tick * .018 + ball.phase) * .012;
-      ball.vy += Math.cos(tick * .014 + ball.phase) * .008;
-      ball.vx *= .999;
-      ball.vy *= .999;
+      ball.vy += Math.cos(tick * .014 + ball.phase) * .028;
+      ball.vx *= .998;
+      ball.vy *= .998;
       if (pointer.active) {
         const dx = ball.x - pointer.x;
         const dy = ball.y - pointer.y;
@@ -495,7 +501,7 @@ function drawBallPit() {
       ball.x += ball.vx;
       ball.y += ball.vy;
       if (ball.x < ball.r || ball.x > w - ball.r) { ball.vx *= -.9; ball.x = Math.max(ball.r, Math.min(w - ball.r, ball.x)); }
-      if (ball.y < ball.r || ball.y > h - ball.r) { ball.vy *= -.82; ball.y = Math.max(ball.r, Math.min(h - ball.r, ball.y)); }
+      if (ball.y < ball.r || ball.y > h - ball.r) { ball.vy *= -ballPhysics.floorBounce; ball.y = Math.max(ball.r, Math.min(h - ball.r, ball.y)); }
       document.querySelectorAll('.hero-copy, .lyric-panel').forEach((obstacle) => {
         const box = obstacle.getBoundingClientRect();
         const canvasBox = canvas.getBoundingClientRect();

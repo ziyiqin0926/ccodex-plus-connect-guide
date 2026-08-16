@@ -102,3 +102,10 @@ test('工具栏提供卸载工具下载且移除中转站实测卡片', () => {
   assert.doesNotMatch(source, /tool-card--dabowan|实时中转站靠谱度实测/);
   assert.doesNotMatch(html, /dabowan\.com/);
 });
+
+test('首页小球采用全首屏漂浮物理，不会持续沉到底部', async () => {
+  const { ballPhysics } = await import('../src/main.js');
+  assert.ok(ballPhysics.gravity < 0.02);
+  assert.ok(ballPhysics.floorBounce >= 0.92);
+  assert.ok(ballPhysics.initialVelocity >= 1.5);
+});
