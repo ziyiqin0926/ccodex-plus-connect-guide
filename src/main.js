@@ -34,7 +34,6 @@ export function buildStepHtml(step, index) {
         ${renderStepScreenshots(step.screenshots)}
         ${index === 0 ? renderDownloads() : ''}
         ${index === 1 ? renderRelayLinks() : ''}
-        ${index === 3 ? renderLocalOptimization() : ''}
         ${renderStepReferences(index)}
       </div>
     </article>
@@ -684,7 +683,21 @@ if (typeof document !== 'undefined') {
   document.querySelector('.hero-copy')?.append(creatorNote);
   renderSteps();
   renderToolkit();
+  renderLocalOptimizationSection();
   bindEvents();
   bindScrollReveal();
   drawBallPit();
+}
+
+function renderLocalOptimizationSection() {
+  if (document.querySelector('#local-boost')) return;
+  const steps = $('#steps');
+  if (!steps) return;
+  const section = document.createElement('section');
+  section.id = 'local-boost';
+  section.className = 'local-optimization-section';
+  section.setAttribute('aria-labelledby', 'local-boost-title');
+  section.innerHTML = renderLocalOptimization();
+  section.querySelector('.optimization-head h4')?.setAttribute('id', 'local-boost-title');
+  steps.after(section);
 }

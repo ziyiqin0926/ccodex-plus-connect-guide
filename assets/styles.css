@@ -1448,3 +1448,15 @@ html[data-theme="light"] .tool-card--gpt56 { background: linear-gradient(145deg,
 html[data-theme="light"] .tool-card--gpt56 .tool-badge, html[data-theme="light"] .tool-card--gpt56 .tool-link { color: #4338ca; }
 @media (max-width: 760px) { .hero { min-height: auto !important; } .hero-copy { padding-bottom: 210px !important; } #heroCanvas { clip-path: inset(70% 0 0 0); } }
 
+/* Local boost is an optional module below the four-step tutorial. */
+.local-optimization-section { width: min(calc(100% - 36px), 1080px); margin: 28px auto 0; }
+.local-optimization-section .local-optimization { margin-top: 0; }
+
+/* Keep the physics field visible across the hero; copy and lyric surfaces are the only blockers. */
+#heroCanvas { clip-path: none !important; opacity: .68 !important; }
+.hero-copy, .lyric-panel { z-index: 3 !important; }
+@media (max-width: 760px) {
+  .local-optimization-section { width: min(calc(100% - 28px), 720px); }
+  #heroCanvas { clip-path: none !important; opacity: .52 !important; }
+}
+
