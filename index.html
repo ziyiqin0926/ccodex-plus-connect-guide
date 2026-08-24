@@ -1,18 +1,12 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Codex 四步接入｜C4X · Codex++ GPT 部署助手</title>
-    <script>
-      try {
-        document.documentElement.dataset.theme = localStorage.getItem('codex-plus-guide-theme') === 'light' ? 'light' : 'dark';
-      } catch {}
-    </script>
-    <link rel="stylesheet" href="assets/styles.css?v=20260824-font-backdrop-ballpit-v24">
+    <link rel="stylesheet" href="assets/styles.css?v=20260824-static-hero-v26">
   </head>
   <body>
-    <canvas id="fluidCanvas" aria-hidden="true"></canvas>
     <header id="top" class="hero">
       <nav aria-label="主导航">
         <strong><a href="#top">CODEX++</a></strong>
@@ -25,12 +19,6 @@
           <a href="#case-studies">实操案例</a>
           <a href="#github">GitHub</a>
         </div>
-        <div class="nav-tools">
-          <button id="themeToggle" class="theme-toggle" type="button" aria-label="切换到亮色模式" aria-pressed="false">
-            <span class="theme-toggle-icon" aria-hidden="true">☼</span>
-            <span class="theme-toggle-label">亮色</span>
-          </button>
-        </div>
       </nav>
       <section class="hero-copy">
         <p class="eyebrow">CODEX 接入作战台 · 默认助手 codeX ++</p>
@@ -41,7 +29,6 @@
           <a class="ghost link-button" href="#community">我已经卡住了</a>
         </div>
       </section>
-      <canvas id="heroCanvas" aria-hidden="true"></canvas>
       <aside class="hero-console" aria-label="连接状态预览">
         <div class="console-orbit"><span></span><i></i></div>
         <div class="console-head"><span>LINK MONITOR</span><b>LIVE</b></div>
@@ -141,13 +128,6 @@
 
     </main>
 
-    <audio id="backgroundMusic" src="assets/mixkit-owies-ukulele-1072.mp3" loop preload="auto" muted></audio>
-    <button id="musicToggle" class="music-dock" type="button" aria-label="播放或暂停背景音乐" aria-pressed="false">
-      <span class="music-disc" aria-hidden="true">♫</span>
-      <span><small>背景音乐</small><strong>Mixkit · Deep Urban</strong></span>
-      <span class="music-play" aria-hidden="true">▶</span>
-    </button>
-    <script src="assets/fluid-background.js"></script>
-    <script type="module" src="src/main.js?v=20260824-font-backdrop-ballpit-v24"></script>
+    <script type="module" src="src/main.js?v=20260824-static-hero-v26"></script>
   </body>
 </html>

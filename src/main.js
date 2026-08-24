@@ -262,58 +262,9 @@ function bindScrollReveal() {
   targets.forEach((target) => observer.observe(target));
 }
 
-function initThemeToggle() {
-  const root = document.documentElement;
-  const toggle = $('#themeToggle');
-  if (!toggle) return;
-  const applyTheme = (theme) => {
-    const isLight = theme === 'light';
-    root.dataset.theme = isLight ? 'light' : 'dark';
-    try { localStorage.setItem('codex-plus-guide-theme', isLight ? 'light' : 'dark'); } catch {}
-    toggle.setAttribute('aria-pressed', String(isLight));
-    toggle.setAttribute('aria-label', isLight ? '切换到夜间模式' : '切换到亮色模式');
-    const icon = toggle.querySelector('.theme-toggle-icon');
-    const label = toggle.querySelector('.theme-toggle-label');
-    if (icon) icon.textContent = isLight ? '☾' : '☼';
-    if (label) label.textContent = isLight ? '夜间' : '亮色';
-  };
-  applyTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
-  toggle.addEventListener('click', () => applyTheme(root.dataset.theme === 'light' ? 'dark' : 'light'));
-}
-
 function bindEvents() {
-  initThemeToggle();
   bindLyrics();
   bindCommunityQr();
-  const music = $('#backgroundMusic');
-  const musicToggle = $('#musicToggle');
-  let musicStarted = false;
-  if (music) music.volume = 0.6;
-  const startMusic = () => {
-    if (!music || musicStarted) return;
-    musicStarted = true;
-    music.muted = false;
-    music.play().then(() => {
-      musicToggle?.setAttribute('aria-pressed', 'true');
-      if (musicToggle) musicToggle.querySelector('.music-play').textContent = 'Ⅱ';
-    }).catch(() => { musicStarted = false; });
-  };
-  if (music) music.play().catch(() => {});
-  document.addEventListener('pointerdown', startMusic, { once: true });
-  musicToggle?.addEventListener('click', () => {
-    if (!music) return;
-    if (music.paused) {
-      musicStarted = true;
-      music.muted = false;
-      music.play();
-      musicToggle.setAttribute('aria-pressed', 'true');
-      musicToggle.querySelector('.music-play').textContent = 'Ⅱ';
-    } else {
-      music.pause();
-      musicToggle.setAttribute('aria-pressed', 'false');
-      musicToggle.querySelector('.music-play').textContent = '▶';
-    }
-  });
   $('#steps').addEventListener('click', (event) => {
     const tab = event.target.closest('[data-step-index]');
     if (tab) {
@@ -710,7 +661,6 @@ if (typeof document !== 'undefined') {
   renderLocalOptimizationSection();
   bindEvents();
   bindScrollReveal();
-  drawBallPit();
 }
 
 function renderLocalOptimizationSection() {

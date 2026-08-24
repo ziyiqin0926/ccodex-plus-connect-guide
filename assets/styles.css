@@ -1486,3 +1486,11 @@ main > section, .local-optimization-section {
   main > section, .local-optimization-section { width: min(var(--page-width), calc(100% - 28px)) !important; }
 }
 
+/* Static hero: remove the physics stage and keep the first screen compact. */
+.hero { min-height: clamp(620px, 76svh, 740px) !important; }
+.hero-copy { padding-bottom: 36px !important; }
+@media (max-width: 760px) {
+  .hero { min-height: auto !important; }
+  .hero-copy { padding-bottom: 56px !important; }
+}
+

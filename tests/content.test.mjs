@@ -94,6 +94,14 @@ test('导航按教程与辅助内容分类，教程采用逐级进入', () => {
   assert.match(html, /data-start-tutorial/);
 });
 
+test('页面固定深色主题且不提供背景音乐', () => {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const source = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  assert.match(html, /<html lang="zh-CN" data-theme="dark">/);
+  assert.doesNotMatch(html, /themeToggle|backgroundMusic|musicToggle|<audio/);
+  assert.doesNotMatch(source, /initThemeToggle|backgroundMusic|musicToggle/);
+});
+
 test('工具栏提供卸载工具下载且移除中转站实测卡片', () => {
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const source = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
@@ -103,15 +111,9 @@ test('工具栏提供卸载工具下载且移除中转站实测卡片', () => {
   assert.doesNotMatch(html, /dabowan\.com/);
 });
 
-test('首页小球采用全首屏漂浮物理，不会持续沉到底部', async () => {
-  const { ballPhysics } = await import('../src/main.js');
-  assert.ok(ballPhysics.gravity < 0.02);
-  assert.ok(ballPhysics.buoyancy > ballPhysics.gravity);
-  assert.ok(ballPhysics.floorBounce >= 0.92);
-  assert.ok(ballPhysics.initialVelocity >= 1.5);
+test('首页不加载物理小球背景', () => {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const source = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
-  assert.match(source, /\.hero-copy > p, \.hero-copy > h1/);
-  assert.match(source, /getFieldBox/);
-  assert.match(source, /field\.bottom - ball\.r/);
-  assert.doesNotMatch(source, /querySelectorAll\('\.hero-copy, \.lyric-panel'\)/);
+  assert.doesNotMatch(html, /heroCanvas|fluidCanvas|fluid-background\.js/);
+  assert.doesNotMatch(source, /\n\s*drawBallPit\(\);/);
 });
