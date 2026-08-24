@@ -439,6 +439,18 @@ function drawBallPit() {
   const colors = ['#9fe4d2', '#9ab7ff', '#f4bf9c', '#dbe795', '#d9c7ff'];
   const fireworks = [];
   const obstacleNodes = Array.from(document.querySelectorAll('.hero-copy > p, .hero-copy > h1, .hero-copy > .hero-actions, .lyric-panel'));
+  const heroCopy = document.querySelector('.hero-copy');
+  const getFieldBox = () => {
+    const canvasBox = canvas.getBoundingClientRect();
+    const box = heroCopy?.getBoundingClientRect();
+    if (!box) return { left: 24, right: rect.width * .62, top: 120, bottom: rect.height * .82 };
+    return {
+      left: Math.max(18, box.left - canvasBox.left - 18),
+      right: Math.min(rect.width - 18, box.right - canvasBox.left + 18),
+      top: Math.max(86, box.top - canvasBox.top - 18),
+      bottom: Math.min(rect.height - 28, box.bottom - canvasBox.top + 18),
+    };
+  };
   const getObstacleBoxes = () => {
     const canvasBox = canvas.getBoundingClientRect();
     return obstacleNodes.map((obstacle) => {
@@ -447,12 +459,12 @@ function drawBallPit() {
     });
   };
   const seed = (value) => (Math.sin(value * 12.9898) * 43758.5453) % 1;
+  const initialField = getFieldBox();
   const balls = Array.from({ length: 28 }, (_, index) => {
-    const side = index % 3;
     const randomX = Math.abs(seed(index + 2));
     return {
-    x: side === 0 ? 20 + randomX * rect.width * .22 : side === 1 ? rect.width * .76 + randomX * rect.width * .22 : rect.width * .28 + randomX * rect.width * .44,
-    y: rect.height * .15 + Math.abs(seed(index + 8)) * rect.height * .65,
+    x: initialField.left + randomX * Math.max(40, initialField.right - initialField.left),
+    y: initialField.top + Math.abs(seed(index + 8)) * Math.max(40, initialField.bottom - initialField.top),
     vx: (index % 2 ? 1 : -1) * (.35 + Math.abs(seed(index + 4)) * .8),
     vy: (seed(index + 12) * 2 - 1) * ballPhysics.initialVelocity,
     r: 18 + Math.abs(seed(index + 6)) * 30,
@@ -491,6 +503,7 @@ function drawBallPit() {
     const h = rect.height;
     ctx.clearRect(0, 0, w, h);
     const obstacleBoxes = getObstacleBoxes();
+    const field = getFieldBox();
     balls.forEach((ball) => {
       ball.vy += ballPhysics.gravity;
       ball.vy -= Math.max(0, ball.y / h - .18) * ballPhysics.buoyancy;
@@ -511,8 +524,8 @@ function drawBallPit() {
       }
       ball.x += ball.vx;
       ball.y += ball.vy;
-      if (ball.x < ball.r || ball.x > w - ball.r) { ball.vx *= -.9; ball.x = Math.max(ball.r, Math.min(w - ball.r, ball.x)); }
-      if (ball.y < ball.r || ball.y > h - ball.r) { ball.vy *= -ballPhysics.floorBounce; ball.y = Math.max(ball.r, Math.min(h - ball.r, ball.y)); }
+      if (ball.x < field.left + ball.r || ball.x > field.right - ball.r) { ball.vx *= -.9; ball.x = Math.max(field.left + ball.r, Math.min(field.right - ball.r, ball.x)); }
+      if (ball.y < field.top + ball.r || ball.y > field.bottom - ball.r) { ball.vy *= -ballPhysics.floorBounce; ball.y = Math.max(field.top + ball.r, Math.min(field.bottom - ball.r, ball.y)); }
       obstacleBoxes.forEach(({ left, right, top, bottom }) => {
         if (ball.x + ball.r < left || ball.x - ball.r > right || ball.y + ball.r < top || ball.y - ball.r > bottom) return;
         const distances = [

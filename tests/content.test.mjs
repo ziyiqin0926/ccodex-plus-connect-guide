@@ -111,5 +111,7 @@ test('首页小球采用全首屏漂浮物理，不会持续沉到底部', async
   assert.ok(ballPhysics.initialVelocity >= 1.5);
   const source = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
   assert.match(source, /\.hero-copy > p, \.hero-copy > h1/);
+  assert.match(source, /getFieldBox/);
+  assert.match(source, /field\.bottom - ball\.r/);
   assert.doesNotMatch(source, /querySelectorAll\('\.hero-copy, \.lyric-panel'\)/);
 });

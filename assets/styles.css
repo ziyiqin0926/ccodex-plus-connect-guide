@@ -1472,8 +1472,7 @@ body { background: #0d1829; }
   padding-top: clamp(116px, 15svh, 160px) !important;
   padding-bottom: 72px !important;
 }
-#heroCanvas { opacity: .62 !important; mix-blend-mode: screen; }
- #heroCanvas { z-index: 1 !important; }
+#heroCanvas { opacity: .62 !important; mix-blend-mode: screen; z-index: 1 !important; }
 .hero > :not(#heroCanvas) { z-index: 3 !important; }
 main { margin-top: -1px; padding-bottom: 72px; background: #0d1829 !important; }
 main > section, .local-optimization-section {
