@@ -117,3 +117,12 @@ test('首页不加载物理小球背景', () => {
   assert.doesNotMatch(html, /heroCanvas|fluidCanvas|fluid-background\.js/);
   assert.doesNotMatch(source, /\n\s*drawBallPit\(\);/);
 });
+
+test('静态版不保留废弃视觉引擎与亮色主题代码', () => {
+  const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const source = fs.readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  const styles = fs.readFileSync(new URL('../assets/styles.css', import.meta.url), 'utf8');
+  for (const term of ['heroCanvas', 'fluidCanvas', 'drawBallPit', 'drawHero', 'ballPhysics', 'data-theme="light"']) {
+    assert.doesNotMatch(`${html}\n${source}\n${styles}`, new RegExp(term));
+  }
+});
